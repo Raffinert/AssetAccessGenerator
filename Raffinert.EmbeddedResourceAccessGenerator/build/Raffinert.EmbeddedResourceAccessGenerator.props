@@ -1,0 +1,15 @@
+﻿<Project>
+	<Target Name="AddGenerateEmbeddedResourceAccessToEmbeddedResources" BeforeTargets="BeforeCompile">
+		<ItemGroup>
+			<EmbeddedResource Update="@(EmbeddedResource)">
+				<GenerateEmbeddedResourceAccess>true</GenerateEmbeddedResourceAccess>
+			</EmbeddedResource>
+		</ItemGroup>
+	</Target>
+	<ItemGroup>
+		<CompilerVisibleItemMetadata Include="EmbeddedResource" MetadataName="GenerateEmbeddedResourceAccess" />
+	</ItemGroup>
+	<PropertyGroup>
+		<AdditionalFileItemNames>$(AdditionalFileItemNames);EmbeddedResource</AdditionalFileItemNames>
+	</PropertyGroup>
+</Project>
