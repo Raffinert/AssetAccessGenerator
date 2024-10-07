@@ -1,15 +1,17 @@
 [![StandWithUkraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
 
-# EmbeddedResourceAccessGenerator
-[![NuGet version (Chorn.EmbeddedResourceAccessGenerator)](https://img.shields.io/nuget/v/Chorn.EmbeddedResourceAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Chorn.EmbeddedResourceAccessGenerator/)
+A refined version of the original [EmbeddedResourceAccessGenerator](https://github.com/ChristophHornung/EmbeddedResourceGenerator) by [ChristophHornung](https://github.com/ChristophHornung)
 
-The EmbeddedResourceAccessGenerator is a code generator to allow easy access to all
+# EmbeddedResourceAccessGenerator
+[![NuGet version (Raffinert.EmbeddedResourceAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.EmbeddedResourceAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.EmbeddedResourceAccessGenerator/)
+
+The Raffinert.EmbeddedResourceAccessGenerator is a code generator to allow easy access to all
 embedded resources.
 
 ## Usage
-Get the nuget package [here](https://www.nuget.org/packages/Chorn.EmbeddedResourceAccessGenerator).
+Get the nuget package [here](https://www.nuget.org/packages/Raffinert.EmbeddedResourceAccessGenerator).
 
-After referencing the `Chorn.EmbeddedResourceAccessGenerator` nuget the code generation will
+After referencing the `Raffinert.EmbeddedResourceAccessGenerator` nuget the code generation will
 automatically create a class `EmbeddedResources` in the root namespace of the project.
 
 Together with the generated `EmbeddedResource` enumeration there are several options to access
@@ -34,15 +36,15 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
 ```
 
 # ContentItemAccessGenerator
-[![NuGet version (Chorn.ContentItemAccessGenerator)](https://img.shields.io/nuget/v/Chorn.ContentItemAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Chorn.ContentItemAccessGenerator/)
+[![NuGet version (Raffinert.ContentItemAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.ContentItemAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.ContentItemAccessGenerator/)
 
-The ContentItemAccessGenerator is a code generator to allow easy access to all
+The Raffinert.ContentItemAccessGenerator is a code generator to allow easy access to all
 content files with **CopyToOutputDirectory attribute specified as Always or PreserveNewest**.
 
 ## Usage
-Get the nuget package [here](https://www.nuget.org/packages/Chorn.ContentItemAccessGenerator).
+Get the nuget package [here](https://www.nuget.org/packages/Raffinert.ContentItemAccessGenerator).
 
-After referencing the `Chorn.ContentItemAccessGenerator` nuget the code generation will
+After referencing the `Raffinert.ContentItemAccessGenerator` nuget the code generation will
 automatically create a class `Contents` in the root namespace of the project.
 
 Together with the generated `Content` enumeration there are several options to access
@@ -67,15 +69,15 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
 ```
 
 # NoneItemAccessGenerator
-[![NuGet version (Chorn.NoneItemAccessGenerator)](https://img.shields.io/nuget/v/Chorn.NoneItemAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Chorn.NoneItemAccessGenerator/)
+[![NuGet version (Chorn.NoneItemAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.NoneItemAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.NoneItemAccessGenerator/)
 
-The NoneItemAccessGenerator is a code generator to allow easy access to all
+The Raffinert.NoneItemAccessGenerator is a code generator to allow easy access to all
 none item files with **CopyToOutputDirectory attribute specified as Always or PreserveNewest**.
 
 ## Usage
-Get the nuget package [here](https://www.nuget.org/packages/Chorn.NoneItemAccessGenerator).
+Get the nuget package [here](https://www.nuget.org/packages/Raffinert.NoneItemAccessGenerator).
 
-After referencing the `Chorn.NoneItemAccessGenerator` nuget the code generation will
+After referencing the `Raffinert.NoneItemAccessGenerator` nuget the code generation will
 automatically create a class `Nones` in the root namespace of the project.
 
 Together with the generated `None` enumeration there are several options to access
