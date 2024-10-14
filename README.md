@@ -2,6 +2,13 @@
 
 A refined version of the original [EmbeddedResourceAccessGenerator](https://github.com/ChristophHornung/EmbeddedResourceGenerator) by [ChristophHornung](https://github.com/ChristophHornung)
 
+Improvements in the EmbeddedResourceAccessGenerator:
+
+* Fixed a bug when the generator generates code for all AdditionalFiles, not EmbeddedResources only. This means that the original EmbeddedResourceAccessGenerator is incompatible with all three generators and must be removed before adding those generators.
+* Removed properties from the EmbeddedResources class, because it's an anti-pattern to create disposable resources on every get property access.
+* The GetReader method now creates the StreamReader with the option leaveOpen: false. It disposes the stream together with the StreamReader.
+* Added synchronous and asynchronous extension methods ReadAllText, ReadAllTextAsync, ReadAllBytes, ReadAllBytesAsync.
+
 # EmbeddedResourceAccessGenerator
 [![NuGet version (Raffinert.EmbeddedResourceAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.EmbeddedResourceAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.EmbeddedResourceAccessGenerator/)
 
@@ -33,6 +40,10 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
     // Via the generated extension methods on the enum
     using Stream s = EmbeddedResource_TestAsset.Test_txt.GetStream();
     using StreamReader sr = EmbeddedResource_TestAsset.Test_txt.GetReader();
+    string text = EmbeddedResource_TestAsset.Test_txt.ReadAllText();
+    string textAsync = await EmbeddedResource_TestAsset.Test_txt.ReadAllTextAsync(CancellationToken.None);
+    byte[] bytes = EmbeddedResource_TestAsset.Test_txt.ReadAllBytes();
+    byte[] bytesAsync = await EmbeddedResource_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 # ContentItemAccessGenerator
@@ -50,7 +61,7 @@ automatically create a class `Contents` in the root namespace of the project.
 Together with the generated `Content` enumeration there are several options to access
 content files:
 
-E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
+E.g. for a `Test.txt` content item in the `TestAsset` folder:
 
 - Via enum access through the `Content` enum:
 
@@ -66,6 +77,10 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
     // Via the generated extension methods on the enum
     using Stream s = Content_TestAsset.Test_txt.GetStream();
     using StreamReader sr = Content_TestAsset.Test_txt.GetReader();
+    string text = Content_TestAsset.Test_txt.ReadAllText();
+    string textAsync = await Content_TestAsset.Test_txt.ReadAllTextAsync(CancellationToken.None);
+    byte[] bytes = Content_TestAsset.Test_txt.ReadAllBytes();
+    byte[] bytesAsync = await Content_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 # NoneItemAccessGenerator
@@ -83,7 +98,7 @@ automatically create a class `Nones` in the root namespace of the project.
 Together with the generated `None` enumeration there are several options to access
 none item files:
 
-E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
+E.g. for a `Test.txt` none item in the `TestAsset` folder:
 
 - Via enum access through the `None` enum:
 
@@ -99,6 +114,10 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
     // Via the generated extension methods on the enum
     using Stream s = None_TestAsset.Test_txt.GetStream();
     using StreamReader sr = None_TestAsset.Test_txt.GetReader();
+    string text = None_TestAsset.Test_txt.ReadAllText();
+    string textAsync = await None_TestAsset.Test_txt.ReadAllTextAsync(CancellationToken.None);
+    byte[] bytes = None_TestAsset.Test_txt.ReadAllBytes();
+    byte[] bytesAsync = await None_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 ## Motivation
