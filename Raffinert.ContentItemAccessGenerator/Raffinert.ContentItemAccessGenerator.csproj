@@ -7,13 +7,14 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Christoph Hornung, Yevhen Cherkes</Authors>
 		<PackageId>Raffinert.ContentItemAccessGenerator</PackageId>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<Copyright>Christoph Hornung, Yevhen Cherkes</Copyright>
 		<Description>Generates strongly typed access methods for content items.</Description>
 		<PackageProjectUrl>https://github.com/Raffinert/AssetAccessGenerator</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Raffinert/AssetAccessGenerator</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>
+			v 1.0.3 - Separate readmes between the projects and update them.
 			v 1.0.2 - Added ReadAllBytes and ReadAllBytesAsync methods
 			v.1.0.1 - Fix the msbuild condition
 			v.1.0.0 - Initial release.
@@ -36,7 +37,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\README.md" Link="README.md" Pack="true" PackagePath=".">
+		<None Include=".\README.md" Link="README.md" Pack="true" PackagePath=".">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
