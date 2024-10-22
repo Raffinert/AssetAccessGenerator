@@ -7,13 +7,14 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Christoph Hornung, Yevhen Cherkes</Authors>
 		<PackageId>Raffinert.EmbeddedResourceAccessGenerator</PackageId>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<Copyright>Christoph Hornung, Yevhen Cherkes</Copyright>
 		<Description>Generates strongly typed access methods for embedded resources.</Description>
 		<PackageProjectUrl>https://github.com/Raffinert/AssetAccessGenerator</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Raffinert/AssetAccessGenerator</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>
+			v 1.0.3 - Fix missing using System.Threading.Tasks directive.
 			v 1.0.2 - Separate readmes between the projects and update them.
 			v 1.0.1 - Added ReadAllBytes and ReadAllBytesAsync methods
 			v 1.0.0

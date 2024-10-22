@@ -34,6 +34,11 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
     // Via the generated extension methods on the enum
     using Stream s = EmbeddedResource.TestAsset_Test_txt.GetStream();
     using StreamReader sr = EmbeddedResource.TestAsset_Test_txt.GetReader();
+    string text = EmbeddedResource.TestAsset_Test_txt.ReadAllText();
+    string textAsync = await EmbeddedResource.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
+    byte[] bytes = EmbeddedResource.TestAsset_Test_txt.ReadAllBytes();
+    byte[] bytesAsync = await EmbeddedResource.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
+
 ```
 
 - Via enum access through the `EmbeddedResource[FolderName]` enum:

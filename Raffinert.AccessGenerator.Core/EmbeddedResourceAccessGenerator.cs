@@ -22,6 +22,7 @@ public static class EmbeddedResourceAccessGenerator
 		                           using System;
 		                           using System.IO;
 		                           using System.Reflection;
+		                           using System.Threading.Tasks;
 
 		                           /// <summary>
 		                           /// Auto-generated class to access all embedded resources in an assembly.
