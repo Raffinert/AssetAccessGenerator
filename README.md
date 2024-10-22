@@ -32,6 +32,11 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
     // Via the generated extension methods on the enum
     using Stream s = EmbeddedResource.TestAsset_Test_txt.GetStream();
     using StreamReader sr = EmbeddedResource.TestAsset_Test_txt.GetReader();
+    string text = EmbeddedResource.TestAsset_Test_txt.ReadAllText();
+    string textAsync = await EmbeddedResource.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
+    byte[] bytes = EmbeddedResource.TestAsset_Test_txt.ReadAllBytes();
+    byte[] bytesAsync = await EmbeddedResource.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
+
 ```
 
 - Via enum access through the `EmbeddedResource[FolderName]` enum:
@@ -65,10 +70,15 @@ E.g. for a `Test.txt` content item in the `TestAsset` folder:
 
 - Via enum access through the `Content` enum:
 
+
 ```csharp
     // Via the generated extension methods on the enum
     using Stream s = Content.TestAsset_Test_txt.GetStream();
     using StreamReader sr = Content.TestAsset_Test_txt.GetReader();
+    string text = Content.TestAsset_Test_txt.ReadAllText();
+    string textAsync = await Content.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
+    byte[] bytes = Content.TestAsset_Test_txt.ReadAllBytes();
+    byte[] bytesAsync = await Content.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 - Via enum access through the `Content[FolderName]` enum:
@@ -106,6 +116,10 @@ E.g. for a `Test.txt` none item in the `TestAsset` folder:
     // Via the generated extension methods on the enum
     using Stream s = None.TestAsset_Test_txt.GetStream();
     using StreamReader sr = None.TestAsset_Test_txt.GetReader();
+    string text = None.TestAsset_Test_txt.ReadAllText();
+    string textAsync = await None.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
+    byte[] bytes = None.TestAsset_Test_txt.ReadAllBytes();
+    byte[] bytesAsync = await None.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 - Via enum access through the `None[FolderName]` enum:

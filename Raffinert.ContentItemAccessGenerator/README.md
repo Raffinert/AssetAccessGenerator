@@ -27,6 +27,10 @@ E.g. for a `Test.txt` content item in the `TestAsset` folder:
     // Via the generated extension methods on the enum
     using Stream s = Content.TestAsset_Test_txt.GetStream();
     using StreamReader sr = Content.TestAsset_Test_txt.GetReader();
+    string text = Content.TestAsset_Test_txt.ReadAllText();
+    string textAsync = await Content.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
+    byte[] bytes = Content.TestAsset_Test_txt.ReadAllBytes();
+    byte[] bytesAsync = await Content.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 - Via enum access through the `Content[FolderName]` enum:

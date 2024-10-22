@@ -27,6 +27,10 @@ E.g. for a `Test.txt` none item in the `TestAsset` folder:
     // Via the generated extension methods on the enum
     using Stream s = None.TestAsset_Test_txt.GetStream();
     using StreamReader sr = None.TestAsset_Test_txt.GetReader();
+    string text = None.TestAsset_Test_txt.ReadAllText();
+    string textAsync = await None.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
+    byte[] bytes = None.TestAsset_Test_txt.ReadAllBytes();
+    byte[] bytesAsync = await None.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 - Via enum access through the `None[FolderName]` enum:
