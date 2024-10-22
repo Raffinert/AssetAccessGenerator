@@ -25,6 +25,7 @@ public static class FileAccessGenerator
 		                           namespace {{contentFiles.RootNamespace}};
 		                           using System;
 		                           using System.IO;
+		                           using System.Threading.Tasks;
 
 		                           /// <summary>
 		                           /// Auto-generated class to access all {{kindLowerCase}} files in an assembly.
