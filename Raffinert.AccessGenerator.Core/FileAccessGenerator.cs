@@ -25,6 +25,7 @@ public static class FileAccessGenerator
 		                           namespace {{contentFiles.RootNamespace}};
 		                           using System;
 		                           using System.IO;
+		                           using System.Threading;
 		                           using System.Threading.Tasks;
 
 		                           /// <summary>
