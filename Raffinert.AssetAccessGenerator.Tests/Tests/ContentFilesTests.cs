@@ -29,5 +29,8 @@ public class ContentFilesTests
 
 		using var reader3 = Content_TestContentAssets.ContentTest_txt.GetReader();
 		Assert.Equal("Success", await reader3.ReadToEndAsync());
+		
+		var file = Content.TestContentAssets_ContentTest_txt.GetFileInfo();
+		Assert.True(file.Exists);
 	}
 }
