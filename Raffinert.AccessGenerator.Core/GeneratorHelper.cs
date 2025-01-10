@@ -87,8 +87,7 @@ public static class GeneratorHelper
 			return new GenerationContext(ImmutableArray<ResourceItem>.Empty, rootNamespace ?? "EmptyRootNamespace");
 		}
 
-		return new GenerationContext([
-			..pathAndKinds.Select(pathAndKind =>
+		return new GenerationContext(pathAndKinds.Select(pathAndKind =>
 			{
 				string resourcePath = Utils.GetRelativePath(pathAndKind.Path, buildProjectDir).Replace("%20", " ");
 				string resourceName = Utils.GetResourceName(resourcePath);
@@ -96,7 +95,6 @@ public static class GeneratorHelper
 				// trick to skip testhost.exe and testhost.dll and other files that are external to the solution
 				var kind = pathAndKind.Path.IsSubPathOf(buildProjectDir) ? pathAndKind.Kind : ResourceKind.Unspecified;
 				return new ResourceItem(resourcePath, identifierName, resourceName, kind);
-			})
-		], rootNamespace);
+			}).ToImmutableArray(), rootNamespace);
 	}
 }
