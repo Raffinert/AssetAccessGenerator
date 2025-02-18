@@ -1,8 +1,10 @@
 ﻿namespace Raffinert.AssetAccessGenerator.Tests.Tests;
 
 using Xunit;
+using Xunit.Abstractions;
+using Xunit.Sdk;
 
-public class NoneFilesTests
+public class NoneFilesTests(ITestOutputHelper testOutputHelper)
 {
 	[Fact]
 	public async Task NoneItemTestTxtIsAccessible()
@@ -37,5 +39,21 @@ public class NoneFilesTests
 		{
 			None.TestNoneAssets_NoneTest_txt
 		}, allNones);
+	}
+
+	public class NoneDataAttribute(string pattern) : DataAttribute
+	{
+		public override IEnumerable<object[]> GetData(System.Reflection.MethodInfo testMethod)
+		{
+			var matches = Nones.GetMatches(pattern);
+			return matches.Select(none => new object[] { none });
+		}
+	}
+
+	[Theory]
+	[NoneData("**/**/*")]
+	public void PrintNonePath(None none)
+	{
+		testOutputHelper.WriteLine(none.GetNoneFilePath());
 	}
 }
