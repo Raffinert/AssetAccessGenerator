@@ -1,13 +1,17 @@
 ﻿namespace Raffinert.AccessGenerator.Core;
 
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Immutable;
 
 public static class GeneratorHelper
 {
-	public static IncrementalValueProvider<GenerationContext> GetConfiguredProvider(IncrementalGeneratorInitializationContext context)
+	public static IncrementalValueProvider<GenerationContext> GetConfiguredProvider(IncrementalGeneratorInitializationContext context, ResourceKind resourceKind)
 	{
 		//Debugger.Launch();
+
+		var typeName = $"{resourceKind}s";
 
 		// We need a value provider for any addition file.
 		// As soon as there is direct access to embedded resources we can change this.
@@ -69,22 +73,52 @@ public static class GeneratorHelper
 					? rootNamespace
 					: null);
 
+		// Extract globbing patterns from source code
+		IncrementalValueProvider<ImmutableArray<string?>> globPatternsProvider =
+			context.SyntaxProvider
+				.CreateSyntaxProvider(
+					predicate: (node, _) =>
+					{
+						if (node is not InvocationExpressionSyntax invocation) return false;
+						if (invocation.Expression is not MemberAccessExpressionSyntax memberAccess) return false;
+						if (memberAccess.Name.Identifier.Text != "GetMatches") return false;
+						if (memberAccess.Expression is not IdentifierNameSyntax isx) return false;
+						return isx.Identifier.Text == typeName;
+					},
+					transform: static (ctx, _) =>
+					{
+						var invocation = (InvocationExpressionSyntax)ctx.Node;
+
+						if (invocation.ArgumentList.Arguments.Count == 1 &&
+							invocation.ArgumentList.Arguments[0].Expression is LiteralExpressionSyntax literal &&
+							literal.Kind() == SyntaxKind.StringLiteralExpression)
+						{
+							return literal.Token.ValueText;
+						}
+
+						return null;
+					})
+				.Where(pattern => pattern is not null)
+				.Collect();
+
 		// We combine the providers to generate the parameters for our source generation.
 		IncrementalValueProvider<GenerationContext> combined = additionalFilesProvider
-				.Combine(rootNamespaceProvider.Combine(buildProjectDirProvider)).Select((c, _) =>
-					(c.Left, c.Right.Left, c.Right.Right))
-				.Select(GeneratorHelper.MapToResourceGenerationContext);
+			.Combine(rootNamespaceProvider
+				.Combine(buildProjectDirProvider)
+				.Combine(globPatternsProvider)) // Adding globPatternsProvider here
+			.Select((c, _) => (c.Left, c.Right.Left.Left, c.Right.Left.Right, c.Right.Right))
+			.Select(GeneratorHelper.MapToResourceGenerationContext);
 
 		return combined;
 	}
 
-	private static GenerationContext MapToResourceGenerationContext((ImmutableArray<(string Path, ResourceKind Kind)>, string?, string? Right) tuple, CancellationToken cancellationToken)
+	private static GenerationContext MapToResourceGenerationContext((ImmutableArray<(string Path, ResourceKind Kind)>, string, string, ImmutableArray<string>) valueTuple, CancellationToken cancellationToken)
 	{
-		var (pathAndKinds, rootNamespace, buildProjectDir) = tuple;
+		var (pathAndKinds, rootNamespace, buildProjectDir, matchesLiterals) = valueTuple;
 
 		if (buildProjectDir == null || rootNamespace == null)
 		{
-			return new GenerationContext(ImmutableArray<ResourceItem>.Empty, rootNamespace ?? "EmptyRootNamespace");
+			return new GenerationContext(ImmutableArray<ResourceItem>.Empty, rootNamespace ?? "EmptyRootNamespace", ImmutableArray<string>.Empty);
 		}
 
 		return new GenerationContext(pathAndKinds.Select(pathAndKind =>
@@ -95,6 +129,6 @@ public static class GeneratorHelper
 				// trick to skip testhost.exe and testhost.dll and other files that are external to the solution
 				var kind = pathAndKind.Path.IsSubPathOf(buildProjectDir) ? pathAndKind.Kind : ResourceKind.Unspecified;
 				return new ResourceItem(resourcePath, identifierName, resourceName, kind);
-			}).ToImmutableArray(), rootNamespace);
+			}).ToImmutableArray(), rootNamespace, matchesLiterals);
 	}
 }

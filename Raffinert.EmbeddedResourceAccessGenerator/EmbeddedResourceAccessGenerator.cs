@@ -32,7 +32,7 @@ public class EmbeddedResourceAccessGenerator : IIncrementalGenerator
 	{
 		//Debugger.Launch();
 
-		var combined = GeneratorHelper.GetConfiguredProvider(context);
+		var combined = GeneratorHelper.GetConfiguredProvider(context, ResourceKind.EmbeddedResource);
 		context.RegisterSourceOutput(combined, EmbeddedResourceAccessGenerator.GenerateSourceIncremental);
 	}
 

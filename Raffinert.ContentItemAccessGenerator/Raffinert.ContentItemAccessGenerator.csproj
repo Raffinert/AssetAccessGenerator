@@ -7,13 +7,14 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Christoph Hornung, Yevhen Cherkes</Authors>
 		<PackageId>Raffinert.ContentItemAccessGenerator</PackageId>
-		<Version>1.0.7</Version>
+		<Version>1.0.8</Version>
 		<Copyright>Christoph Hornung, Yevhen Cherkes</Copyright>
 		<Description>Generates strongly typed access methods for content items.</Description>
 		<PackageProjectUrl>https://github.com/Raffinert/AssetAccessGenerator</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Raffinert/AssetAccessGenerator</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>
+			v 1.0.8 - Add Contents.GetMatches method.
 			v 1.0.7 - Downgrade version of Microsoft.CodeAnalysis.CSharp to be compatible with entityframework design tools.
 			v 1.0.6 - Add GetFileInfo extension.
 			v 1.0.5 - Fix missing using System.Threading directive.
@@ -38,6 +39,50 @@
 	  <Compile Include="..\Raffinert.AccessGenerator.Core\GeneratorHelper.cs" Link="Core\GeneratorHelper.cs" />
 	  <Compile Include="..\Raffinert.AccessGenerator.Core\ResourceItem.cs" Link="Core\ResourceItem.cs" />
 	  <Compile Include="..\Raffinert.AccessGenerator.Core\Utils.cs" Link="Core\Utils.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\ParsedGlob.cs" Link="Core\ParsedGlob.cs" />
+
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\EvaluationOptions.cs" Link="Core\DotNet.Glob\EvaluationOptions.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Glob.cs" Link="Core\DotNet.Glob\Glob.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\GlobBuilder.cs" Link="Core\DotNet.Glob\GlobBuilder.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\GlobOptions.cs" Link="Core\DotNet.Glob\GlobOptions.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\GlobStringReader.cs" Link="Core\DotNet.Glob\GlobStringReader.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\GlobTokeniser.cs" Link="Core\DotNet.Glob\GlobTokeniser.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\GlobTokenMatch.cs" Link="Core\DotNet.Glob\GlobTokenMatch.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\IGlobBuilder.cs" Link="Core\DotNet.Glob\IGlobBuilder.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\IGlobTokenVisitor.cs" Link="Core\DotNet.Glob\IGlobTokenVisitor.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\MatchInfo.cs" Link="Core\DotNet.Glob\MatchInfo.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\PathSeparatorKind.cs" Link="Core\DotNet.Glob\PathSeparatorKind.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\AnyCharacterTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\AnyCharacterTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\CharacterListTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\CharacterListTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\CharacterListTokenEvaluatorCaseInsensitive.cs" Link="Core\DotNet.Glob\Evaluation\CharacterListTokenEvaluatorCaseInsensitive.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\CompositeTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\CompositeTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\GlobTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\GlobTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\GlobTokenEvaluatorFactory.cs" Link="Core\DotNet.Glob\Evaluation\GlobTokenEvaluatorFactory.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\GlobTokenMatchAnalysisEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\GlobTokenMatchAnalysisEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\IGlobTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\IGlobTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\IGlobTokenEvaluatorFactory.cs" Link="Core\DotNet.Glob\Evaluation\IGlobTokenEvaluatorFactory.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\LetterRangeTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\LetterRangeTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\LetterRangeTokenEvaluatorCaseInsensitive.cs" Link="Core\DotNet.Glob\Evaluation\LetterRangeTokenEvaluatorCaseInsensitive.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\LiteralTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\LiteralTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\LiteralTokenEvaluatorCaseInsensitive.cs" Link="Core\DotNet.Glob\Evaluation\LiteralTokenEvaluatorCaseInsensitive.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\NumberRangeTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\NumberRangeTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\PathSeparatorTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\PathSeparatorTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\WildcardDirectoryTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\WildcardDirectoryTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Evaluation\WildcardTokenEvaluator.cs" Link="Core\DotNet.Glob\Evaluation\WildcardTokenEvaluator.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Formatting\GlobTokenFormatter.cs" Link="Core\DotNet.Glob\Formatting\GlobTokenFormatter.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Properties\AssemblyInfo.cs" Link="Core\DotNet.Glob\Properties\AssemblyInfo.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\AnyCharacterToken.cs" Link="Core\DotNet.Glob\Token\AnyCharacterToken.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\CharacterListToken.cs" Link="Core\DotNet.Glob\Token\CharacterListToken.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\IGlobToken.cs" Link="Core\DotNet.Glob\Token\IGlobToken.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\INegatableToken.cs" Link="Core\DotNet.Glob\Token\INegatableToken.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\IVisitable.cs" Link="Core\DotNet.Glob\Token\IVisitable.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\LetterRangeToken.cs" Link="Core\DotNet.Glob\Token\LetterRangeToken.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\LiteralToken.cs" Link="Core\DotNet.Glob\Token\LiteralToken.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\NumberRangeToken.cs" Link="Core\DotNet.Glob\Token\NumberRangeToken.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\PathSeparatorToken.cs" Link="Core\DotNet.Glob\Token\PathSeparatorToken.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\RangeToken.cs" Link="Core\DotNet.Glob\Token\RangeToken.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\WildcardDirectoryToken.cs" Link="Core\DotNet.Glob\Token\WildcardDirectoryToken.cs" />
+		<Compile Include="..\Raffinert.AccessGenerator.Core\DotNet.Glob\Token\WildcardToken.cs" Link="Core\DotNet.Glob\Token\WildcardToken.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -72,4 +117,5 @@
 	<ItemGroup>
 	  <Folder Include="Core\" />
 	</ItemGroup>
+
 </Project>

@@ -32,7 +32,7 @@ public class NoneItemAccessGenerator : IIncrementalGenerator
 	{
 		//Debugger.Launch();
 
-		var combined = GeneratorHelper.GetConfiguredProvider(context);
+		var combined = GeneratorHelper.GetConfiguredProvider(context, ResourceKind.None);
 		context.RegisterSourceOutput(combined, NoneItemAccessGenerator.GenerateSourceIncremental);
 	}
 

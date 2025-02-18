@@ -32,7 +32,7 @@ public class ContentItemAccessGenerator : IIncrementalGenerator
 	{
 		//Debugger.Launch();
 
-		var combined = GeneratorHelper.GetConfiguredProvider(context);
+		var combined = GeneratorHelper.GetConfiguredProvider(context, ResourceKind.Content);
 		context.RegisterSourceOutput(combined, ContentItemAccessGenerator.GenerateSourceIncremental);
 	}
 

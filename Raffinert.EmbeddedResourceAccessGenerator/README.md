@@ -53,6 +53,16 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
     byte[] bytesAsync = await EmbeddedResource_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
+### Using `GetMatches` for Pattern Matching
+
+```csharp
+    var matches = EmbeddedResources.GetMatches("**/*e?/*");
+    foreach (var resource in matches)
+    {
+        Console.WriteLine(resource);
+    }
+```
+
 ## Motivation
 Instead of using magic strings in the resource access code that may point to non-existant
 resources this generator guarantees resources to exist and code to not compile when they are

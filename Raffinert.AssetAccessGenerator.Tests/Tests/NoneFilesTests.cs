@@ -23,8 +23,19 @@ public class NoneFilesTests
 		var bytes2 = None.TestNoneAssets_NoneTest_txt.ReadAllBytes();
 
 		Assert.Equivalent(new byte[] { 239, 187, 191, 83, 117, 99, 99, 101, 115, 115 }, bytes2);
-		
+
 		var file = None.TestNoneAssets_NoneTest_txt.GetFileInfo();
 		Assert.True(file.Exists);
+	}
+
+	[Fact]
+	public void GetMatchesIsAccessible()
+	{
+		var allNones = Nones.GetMatches("**/**/*").ToArray();
+
+		Assert.Equivalent(new[]
+		{
+			None.TestNoneAssets_NoneTest_txt
+		}, allNones);
 	}
 }
