@@ -45,6 +45,17 @@ E.g. for a `Test.txt` none item in the `TestAsset` folder:
     byte[] bytesAsync = await None_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
+### Using `GetMatches` for Pattern Matching
+
+```csharp
+    var matches = Nones.GetMatches("**/**");
+    foreach (var none in matches)
+    {
+        Console.WriteLine(none);
+    }
+```
+
+
 ## See also:
 
 * [Raffinert.ContentItemAccessGenerator](https://www.nuget.org/packages/Raffinert.ContentItemAccessGenerator)
