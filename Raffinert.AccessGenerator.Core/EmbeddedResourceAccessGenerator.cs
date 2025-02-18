@@ -16,9 +16,9 @@ public static class EmbeddedResourceAccessGenerator
 		}
 
 		StringBuilder sourceBuilder = new();
-		sourceBuilder.AppendLine($$"""
+		sourceBuilder.AppendLine($$$"""
 		                           #nullable enable
-		                           namespace {{embeddedResources.RootNamespace}};
+		                           namespace {{{embeddedResources.RootNamespace}}};
 		                           using System;
 		                           using System.IO;
 		                           using System.Reflection;
@@ -30,7 +30,72 @@ public static class EmbeddedResourceAccessGenerator
 		                           /// </summary>
 		                           public static partial class EmbeddedResources
 		                           {
+		                               /// <summary>
+		                               /// Retrieves a collection of embedded resources that match the specified pattern literal.
+		                               /// </summary>
+		                               /// <param name="pattern">The search pattern literal to match embedded resources.</param>
+		                               /// <returns>
+		                               /// An <see cref="IEnumerable{EmbeddedResource}"/> containing the matched embedded resources.
+		                               /// </returns>
+		                               public static IEnumerable<EmbeddedResource> GetMatches(string pattern)
+		                               {
 		                           """);
+
+		var parsedGlobs = embeddedResources.MatchesLiterals
+			.Distinct()
+			.Select(ParsedGlob.Create)
+			.Where(x => x.IsCorrect)
+			.ToArray();
+
+		var matchedFiles = parsedGlobs
+			.Select(g => (g.Pattern, Matches: embeddedResources.Where(c => g.Glob.IsMatch(c.RelativePath)).ToArray()))
+			.Where(x => x.Matches.Length > 0)
+			.OrderBy(x => x.Pattern)
+			.ToArray();
+
+		if (matchedFiles.Length == 0)
+		{
+			sourceBuilder.AppendLine("""
+			                                  return Enumerable.Empty<EmbeddedResource>();
+			                             }
+			                         """);
+		}
+		else
+		{
+			(HashSet<string> values, string[] patterns)[] matchedFilesGroupedByMatches = matchedFiles.GroupBy(x =>
+					new HashSet<string>(x.Matches.Select(m => m.RelativePath)), HashSet<string>.CreateSetComparer())
+				.Select(g => (values: g.Key, patterns: g.Select(x => x.Pattern).ToArray()))
+				.ToArray();
+
+			sourceBuilder.AppendLine("""
+			                                 switch (pattern)
+			                                 {
+			                         """);
+
+			foreach (var (matches, patterns) in matchedFilesGroupedByMatches)
+			{
+				foreach (var pattern in patterns)
+				{
+					sourceBuilder.AppendLine($"""
+					                                      case @"{pattern}": 
+					                          """);
+				}
+
+				foreach (var match in matches)
+				{
+					sourceBuilder.AppendLine($"                yield return EmbeddedResource.{Utils.PathAsClassname(match, "_")};");
+				}
+
+				sourceBuilder.AppendLine("                break;");
+			}
+
+			sourceBuilder.AppendLine("""
+			                                 }
+			                             }
+			                         """);
+		}
+
+
 
 		sourceBuilder.AppendLine("""
 		                         	/// <summary>

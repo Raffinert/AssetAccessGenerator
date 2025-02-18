@@ -94,4 +94,22 @@ public class EmbeddedAssetAccessGeneratorTests
 
 		Assert.Equivalent(new byte[] { 239, 187, 191, 83, 117, 99, 99, 101, 115, 115 }, bytes2);
 	}
+
+	[Fact]
+	public void GetMatchesIsAccessible()
+	{
+		var allEmbeddedResources = EmbeddedResources.GetMatches("**/**/*").ToArray();
+
+		Assert.Equivalent(new[]
+		{
+			EmbeddedResource.TestAssets___InvalidChars_Test_txt,
+			EmbeddedResource.TestAssets_2InvalidChars___txt,
+			EmbeddedResource.TestAssets_Subfolder_With_Spaces_Test_With_Spaces_txt,
+			EmbeddedResource.TestAssets_Subfolder_Test_txt,
+			EmbeddedResource.TestAssets_Test_With_Spaces_txt,
+			EmbeddedResource.TestAssets_Test_txt,
+			EmbeddedResource._InvalidChars___txt,
+			EmbeddedResource.Test_txt
+		}, allEmbeddedResources);
+	}
 }
