@@ -7,13 +7,14 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Christoph Hornung, Yevhen Cherkes</Authors>
 		<PackageId>Raffinert.NoneItemAccessGenerator</PackageId>
-		<Version>1.0.8</Version>
+		<Version>1.0.9</Version>
 		<Copyright>Christoph Hornung, Yevhen Cherkes</Copyright>
 		<Description>Generates strongly typed access methods for none item files.</Description>
 		<PackageProjectUrl>https://github.com/Raffinert/AssetAccessGenerator</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Raffinert/AssetAccessGenerator</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>
+			v 1.0.9 - Remove dependency on DotNet.Glob.
 			v 1.0.8 - Add Nones.GetMatches method.
 			v 1.0.7 - Downgrade version of Microsoft.CodeAnalysis.CSharp to be compatible with entityframework design tools.
 			v 1.0.6 - Add GetFileInfo extension.
@@ -109,7 +110,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" PrivateAssets="all" />
-		<PackageReference Include="DotNet.Glob" Version="3.1.3"/>
 		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
