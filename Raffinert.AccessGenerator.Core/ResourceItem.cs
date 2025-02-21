@@ -50,7 +50,8 @@ public enum ResourceKind
 public record GenerationContext(
 	ImmutableArray<ResourceItem> Resources,
 	string RootNamespace,
-	ImmutableArray<string> MatchesLiterals) : IEnumerable<ResourceItem>
+	ImmutableArray<string> MatchesLiterals,
+	bool IsXunitDataAttributeAvailable) : IEnumerable<ResourceItem>
 {
 	private ImmutableArray<ResourceItem> Resources = Resources;
 
@@ -60,6 +61,8 @@ public record GenerationContext(
 	/// Gets the root namespace.
 	/// </summary>
 	public string RootNamespace { get; } = RootNamespace;
+
+	public bool IsXunitDataAttributeAvailable { get; } = IsXunitDataAttributeAvailable;
 
 	/// <summary>
 	/// Creates a new resource generation context with the specified resource kind.

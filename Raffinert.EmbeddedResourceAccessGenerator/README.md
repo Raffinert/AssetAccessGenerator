@@ -63,6 +63,18 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
     }
 ```
 
+
+### xUnit integration
+
+```csharp
+    [Theory]
+    [EmbeddedResources.FromPattern("**/**/*")]
+    public void PrintEmbeddedResource(EmbeddedResource file)
+    {
+        testOutputHelper.WriteLine(file.ToString());
+    }
+```
+
 ## Motivation
 Instead of using magic strings in the resource access code that may point to non-existant
 resources this generator guarantees resources to exist and code to not compile when they are
