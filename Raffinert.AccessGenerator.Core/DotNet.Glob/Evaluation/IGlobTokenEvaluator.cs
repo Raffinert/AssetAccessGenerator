@@ -2,7 +2,7 @@ using System;
 
 namespace DotNet.Globbing.Evaluation
 {
-    public interface IGlobTokenEvaluator
+    internal interface IGlobTokenEvaluator
     {
 
 #if SPAN

@@ -2,7 +2,7 @@
 
 namespace DotNet.Globbing
 {
-    public interface IGlobTokenVisitor
+    internal interface IGlobTokenVisitor
     {
         void Visit(WildcardToken token);
         void Visit(WildcardDirectoryToken wildcardDirectoryToken);

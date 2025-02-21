@@ -3,7 +3,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing
 {
-    public class MatchInfo
+    internal class MatchInfo
     {
         public GlobTokenMatch[] Matches { get; set; }
 

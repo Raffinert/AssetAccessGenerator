@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DotNet.Globbing
 {
-    public class GlobStringReader : StringReader
+    internal class GlobStringReader : StringReader
     {
         private readonly string _text;
         private int _currentIndex;

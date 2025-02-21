@@ -5,7 +5,7 @@ using DotNet.Globbing.Token;
 namespace DotNet.Globbing.Evaluation
 {
 
-    public class CharacterListTokenEvaluatorCaseInsensitive : IGlobTokenEvaluator
+    internal class CharacterListTokenEvaluatorCaseInsensitive : IGlobTokenEvaluator
     {
         private readonly CharacterListToken _token;
         private readonly char[] _charactersAsUpperInvariant;

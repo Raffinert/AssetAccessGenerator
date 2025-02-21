@@ -1,6 +1,6 @@
 ﻿namespace DotNet.Globbing.Token
 {
-    public class WildcardDirectoryToken : IGlobToken
+    internal class WildcardDirectoryToken : IGlobToken
     {
 
         public WildcardDirectoryToken(PathSeparatorToken leadingPathSeparator, PathSeparatorToken trailingPathSeparator)

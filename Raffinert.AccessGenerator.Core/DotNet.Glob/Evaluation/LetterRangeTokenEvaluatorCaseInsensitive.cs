@@ -4,7 +4,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing.Evaluation
 {
-    public class LetterRangeTokenEvaluatorCaseInsensitive : IGlobTokenEvaluator
+    internal class LetterRangeTokenEvaluatorCaseInsensitive : IGlobTokenEvaluator
     {
         private readonly LetterRangeToken _token;
         private readonly char _startUpperInvariant;

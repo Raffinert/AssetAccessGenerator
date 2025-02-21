@@ -2,7 +2,7 @@
 
 namespace DotNet.Globbing.Evaluation
 {
-    public interface IGlobTokenEvaluatorFactory
+    internal interface IGlobTokenEvaluatorFactory
     {
         IGlobTokenEvaluator CreateTokenEvaluator(AnyCharacterToken token);
         IGlobTokenEvaluator CreateTokenEvaluator(CharacterListToken token);

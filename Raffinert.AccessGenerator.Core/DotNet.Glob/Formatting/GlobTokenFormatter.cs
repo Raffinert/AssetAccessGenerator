@@ -7,7 +7,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing
 {
-    public class GlobTokenFormatter : IGlobTokenVisitor
+    internal class GlobTokenFormatter : IGlobTokenVisitor
     {
         private StringBuilder _stringBuilder;
 

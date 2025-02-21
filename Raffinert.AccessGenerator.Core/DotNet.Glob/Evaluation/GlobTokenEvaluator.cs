@@ -3,7 +3,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing.Evaluation
 {
-    public class GlobTokenEvaluator
+    internal class GlobTokenEvaluator
     {
 
         public int _currentCharIndex;

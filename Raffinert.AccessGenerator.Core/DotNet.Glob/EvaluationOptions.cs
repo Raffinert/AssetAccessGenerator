@@ -2,7 +2,7 @@
 
 namespace DotNet.Globbing
 {
-    public class EvaluationOptions
+    internal class EvaluationOptions
     {
         public EvaluationOptions()
         {

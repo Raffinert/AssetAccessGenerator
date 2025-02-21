@@ -2,7 +2,7 @@
 
 namespace DotNet.Globbing.Evaluation
 {
-    public class GlobTokenEvaluatorFactory : IGlobTokenEvaluatorFactory
+    internal class GlobTokenEvaluatorFactory : IGlobTokenEvaluatorFactory
     {
         private readonly EvaluationOptions _options;
 

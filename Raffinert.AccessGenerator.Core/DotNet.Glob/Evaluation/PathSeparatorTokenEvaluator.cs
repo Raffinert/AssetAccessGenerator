@@ -4,7 +4,7 @@ using DotNet.Globbing.Token;
 namespace DotNet.Globbing.Evaluation
 {
 
-    public class PathSeparatorTokenEvaluator : IGlobTokenEvaluator
+    internal class PathSeparatorTokenEvaluator : IGlobTokenEvaluator
     {
         private readonly PathSeparatorToken _token;
 

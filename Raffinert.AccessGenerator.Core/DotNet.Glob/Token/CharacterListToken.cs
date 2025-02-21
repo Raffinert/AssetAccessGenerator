@@ -1,6 +1,6 @@
 ﻿namespace DotNet.Globbing.Token
 {
-    public class CharacterListToken : INegatableToken
+    internal class CharacterListToken : INegatableToken
     {
         public CharacterListToken(char[] characters, bool isNegated)
         {

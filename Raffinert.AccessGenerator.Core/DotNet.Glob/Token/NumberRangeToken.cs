@@ -1,6 +1,6 @@
 ﻿namespace DotNet.Globbing.Token
 {
-    public class NumberRangeToken : RangeToken<char>
+    internal class NumberRangeToken : RangeToken<char>
     {
         public NumberRangeToken(char start, char end, bool isNegated) : base(start, end, isNegated)
         {

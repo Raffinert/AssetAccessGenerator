@@ -4,7 +4,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing.Evaluation
 {
-    public class CompositeTokenEvaluator : IGlobTokenEvaluator, IGlobTokenVisitor
+    internal class CompositeTokenEvaluator : IGlobTokenEvaluator, IGlobTokenVisitor
     {
         private readonly IGlobTokenEvaluatorFactory _evaluatorFactory;
         private IGlobToken[] _Tokens;

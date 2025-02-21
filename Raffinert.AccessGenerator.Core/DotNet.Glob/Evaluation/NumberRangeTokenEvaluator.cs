@@ -3,7 +3,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing.Evaluation
 {
-    public class NumberRangeTokenEvaluator : IGlobTokenEvaluator
+    internal class NumberRangeTokenEvaluator : IGlobTokenEvaluator
     {
         private readonly NumberRangeToken _token;
 

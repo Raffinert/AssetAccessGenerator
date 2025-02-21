@@ -4,7 +4,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing.Evaluation
 {
-    public class LetterRangeTokenEvaluator : IGlobTokenEvaluator
+    internal class LetterRangeTokenEvaluator : IGlobTokenEvaluator
     {
         private readonly LetterRangeToken _token;
 
