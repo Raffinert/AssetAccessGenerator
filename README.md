@@ -54,11 +54,11 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
 
 ```csharp
     [Theory]
-	[EmbeddedResources.FromPattern("**/**/*")]
-	public void PrintEmbeddedResource(EmbeddedResource file)
-	{
-		testOutputHelper.WriteLine(file.ToString());
-	}
+    [EmbeddedResources.FromPattern("**/**/*")]
+    public void PrintEmbeddedResource(EmbeddedResource file)
+    {
+        testOutputHelper.WriteLine(file.ToString());
+    }
 ```
 
 
@@ -88,12 +88,12 @@ automatically create a class `Contents` in the root namespace of the project.
 ### xUnit integration
 
 ```csharp
-	[Theory]
-	[Contents.FromPattern("**/**/cont*")]
-	public void PrintContentPath(Content file)
-	{
-		testOutputHelper.WriteLine(file.GetContentFilePath());
-	}
+    [Theory]
+    [Contents.FromPattern("**/**/cont*")]
+    public void PrintContentPath(Content file)
+    {
+        testOutputHelper.WriteLine(file.GetContentFilePath());
+    }
 ```
 
 
@@ -123,11 +123,11 @@ automatically create a class `Nones` in the root namespace of the project.
 
 ```csharp
     [Theory]
-	[Nones.FromPattern("**/**/*test.txt")]
-	public void PrintNonePath(None file)
-	{
-		testOutputHelper.WriteLine(file.GetNoneFilePath());
-	}
+    [Nones.FromPattern("**/**/*test.txt")]
+    public void PrintNonePath(None file)
+    {
+        testOutputHelper.WriteLine(file.GetNoneFilePath());
+    }
 ```
 
 ## Motivation

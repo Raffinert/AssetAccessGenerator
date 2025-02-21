@@ -59,12 +59,12 @@ E.g. for a `Test.txt` content item in the `TestAsset` folder:
 ### xUnit integration
 
 ```csharp
-	[Theory]
-	[Contents.FromPattern("**/**/cont*")]
-	public void PrintContentPath(Content file)
-	{
-		testOutputHelper.WriteLine(file.GetContentFilePath());
-	}
+    [Theory]
+    [Contents.FromPattern("**/**/cont*")]
+    public void PrintContentPath(Content file)
+    {
+        testOutputHelper.WriteLine(file.GetContentFilePath());
+    }
 ```
 
 ## See also:

@@ -68,11 +68,11 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
 
 ```csharp
     [Theory]
-	[EmbeddedResources.FromPattern("**/**/*")]
-	public void PrintEmbeddedResource(EmbeddedResource file)
-	{
-		testOutputHelper.WriteLine(file.ToString());
-	}
+    [EmbeddedResources.FromPattern("**/**/*")]
+    public void PrintEmbeddedResource(EmbeddedResource file)
+    {
+        testOutputHelper.WriteLine(file.ToString());
+    }
 ```
 
 ## Motivation
