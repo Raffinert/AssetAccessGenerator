@@ -5,7 +5,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing
 {
-    public class GlobTokeniser
+    internal class GlobTokeniser
     {
         private readonly StringBuilder _currentBufferText;
 

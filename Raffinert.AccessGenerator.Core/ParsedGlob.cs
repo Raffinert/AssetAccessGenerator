@@ -2,7 +2,7 @@
 
 using DotNet.Globbing;
 
-public class ParsedGlob
+internal class ParsedGlob
 {
 	private ParsedGlob(string pattern)
 	{

@@ -4,7 +4,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing
 {
-    public class GlobBuilder : IGlobBuilder
+    internal class GlobBuilder : IGlobBuilder
     {
         private readonly List<IGlobToken> _tokens;
 

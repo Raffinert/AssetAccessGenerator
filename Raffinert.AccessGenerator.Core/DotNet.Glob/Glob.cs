@@ -5,7 +5,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing
 {
-    public class Glob
+    internal class Glob
     {
         public IGlobToken[] Tokens { get; }
         private GlobTokenFormatter _Formatter;

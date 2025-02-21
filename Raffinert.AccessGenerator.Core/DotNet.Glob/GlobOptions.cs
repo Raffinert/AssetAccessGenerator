@@ -1,6 +1,6 @@
 ﻿namespace DotNet.Globbing
 {
-    public class GlobOptions
+    internal class GlobOptions
     {
         public GlobOptions()
         {

@@ -1,6 +1,6 @@
 ﻿namespace DotNet.Globbing.Token
 {
-    public class LiteralToken : IGlobToken
+    internal class LiteralToken : IGlobToken
     {
         public LiteralToken(string value)
         {

@@ -6,7 +6,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing.Evaluation
 {
-    public class GlobTokenMatchAnalysisEvaluator : IGlobTokenVisitor
+    internal class GlobTokenMatchAnalysisEvaluator : IGlobTokenVisitor
     {
         private IGlobToken[] _Tokens;
         private GlobStringReader _Reader;

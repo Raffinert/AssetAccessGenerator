@@ -1,6 +1,6 @@
 ﻿namespace DotNet.Globbing.Token
 {
-    public interface IGlobToken : IVisitable<IGlobTokenVisitor>
+    internal interface IGlobToken : IVisitable<IGlobTokenVisitor>
     {
 
     }

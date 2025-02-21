@@ -4,7 +4,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing.Evaluation
 {
-    public class LiteralTokenEvaluatorCaseInsensitive : IGlobTokenEvaluator
+    internal class LiteralTokenEvaluatorCaseInsensitive : IGlobTokenEvaluator
     {
 
         private readonly LiteralToken _token;

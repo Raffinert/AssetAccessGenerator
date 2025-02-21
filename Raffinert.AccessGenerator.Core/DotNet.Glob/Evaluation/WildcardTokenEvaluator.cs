@@ -4,7 +4,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing.Evaluation
 {
-    public class WildcardTokenEvaluator : IGlobTokenEvaluator
+    internal class WildcardTokenEvaluator : IGlobTokenEvaluator
     {
         private readonly WildcardToken _token;
         private readonly CompositeTokenEvaluator _subEvaluator;

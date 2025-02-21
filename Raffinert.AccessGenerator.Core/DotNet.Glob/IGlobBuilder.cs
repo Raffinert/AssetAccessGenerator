@@ -3,7 +3,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing
 {
-    public interface IGlobBuilder
+    internal interface IGlobBuilder
     {
         IGlobBuilder PathSeparator(PathSeparatorKind kind = PathSeparatorKind.ForwardSlash);
         IGlobBuilder Literal(string text);

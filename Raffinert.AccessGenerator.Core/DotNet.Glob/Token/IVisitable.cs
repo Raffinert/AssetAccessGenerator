@@ -1,6 +1,6 @@
 ﻿namespace DotNet.Globbing.Token
 {
-    public interface IVisitable<T>
+    internal interface IVisitable<T>
     {
         void Accept(T Visitor);
     }

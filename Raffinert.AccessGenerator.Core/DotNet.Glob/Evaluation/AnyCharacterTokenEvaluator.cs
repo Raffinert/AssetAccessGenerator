@@ -3,7 +3,7 @@ using DotNet.Globbing.Token;
 
 namespace DotNet.Globbing.Evaluation
 {
-    public class AnyCharacterTokenEvaluator : IGlobTokenEvaluator
+    internal class AnyCharacterTokenEvaluator : IGlobTokenEvaluator
     {
         private readonly AnyCharacterToken _token;
 
