@@ -56,6 +56,17 @@ E.g. for a `Test.txt` none item in the `TestAsset` folder:
 ```
 
 
+### xUnit integration
+
+```csharp
+    [Theory]
+	[Nones.FromPattern("**/**/*test.txt")]
+	public void PrintNonePath(None file)
+	{
+		testOutputHelper.WriteLine(file.GetNoneFilePath());
+	}
+```
+
 ## See also:
 
 * [Raffinert.ContentItemAccessGenerator](https://www.nuget.org/packages/Raffinert.ContentItemAccessGenerator)

@@ -9,6 +9,7 @@ Improvements in the EmbeddedResourceAccessGenerator:
 * The GetReader method now creates the StreamReader with the option leaveOpen: false. It disposes the stream together with the StreamReader.
 * Added synchronous and asynchronous extension methods ReadAllText, ReadAllTextAsync, ReadAllBytes, ReadAllBytesAsync.
 * Added `GetMatches` method for filesystem globbing support (be careful - it supports only string literals).
+* Added [FromPattern] xUnit attribute for use with the [Theory] attribute.
 
 # EmbeddedResourceAccessGenerator
 [![NuGet version (Raffinert.EmbeddedResourceAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.EmbeddedResourceAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.EmbeddedResourceAccessGenerator/)
@@ -48,6 +49,19 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
     }
 ```
 
+
+### xUnit integration
+
+```csharp
+    [Theory]
+	[EmbeddedResources.FromPattern("**/**/*")]
+	public void PrintEmbeddedResource(EmbeddedResource file)
+	{
+		testOutputHelper.WriteLine(file.ToString());
+	}
+```
+
+
 # ContentItemAccessGenerator
 [![NuGet version (Raffinert.ContentItemAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.ContentItemAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.ContentItemAccessGenerator/)
 
@@ -70,6 +84,19 @@ automatically create a class `Contents` in the root namespace of the project.
     }
 ```
 
+
+### xUnit integration
+
+```csharp
+	[Theory]
+	[Contents.FromPattern("**/**/cont*")]
+	public void PrintContentPath(Content file)
+	{
+		testOutputHelper.WriteLine(file.GetContentFilePath());
+	}
+```
+
+
 # NoneItemAccessGenerator
 [![NuGet version (Chorn.NoneItemAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.NoneItemAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.NoneItemAccessGenerator/)
 
@@ -90,6 +117,17 @@ automatically create a class `Nones` in the root namespace of the project.
     {
         Console.WriteLine(none);
     }
+```
+
+### xUnit integration
+
+```csharp
+    [Theory]
+	[Nones.FromPattern("**/**/*test.txt")]
+	public void PrintNonePath(None file)
+	{
+		testOutputHelper.WriteLine(file.GetNoneFilePath());
+	}
 ```
 
 ## Motivation
