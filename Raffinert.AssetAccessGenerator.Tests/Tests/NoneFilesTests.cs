@@ -1,59 +1,50 @@
-﻿namespace Raffinert.AssetAccessGenerator.Tests.Tests;
-
-using Xunit;
-using Xunit.Abstractions;
-using Xunit.Sdk;
-
-public class NoneFilesTests(ITestOutputHelper testOutputHelper)
+﻿namespace Raffinert.AssetAccessGenerator.Tests.Tests
 {
-	[Fact]
-	public async Task NoneItemTestTxtIsAccessible()
+	using Xunit;
+	using Xunit.Abstractions;
+
+	public class NoneFilesTests(ITestOutputHelper testOutputHelper)
 	{
-		using var reader = None.TestNoneAssets_NoneTest_txt.GetReader();
-		Assert.Equal("Success", await reader.ReadToEndAsync());
-
-		var text = None.TestNoneAssets_NoneTest_txt.ReadAllText();
-		Assert.Equal("Success", text);
-
-		var text2 = await None.TestNoneAssets_NoneTest_txt.ReadAllTextAsync(CancellationToken.None);
-		Assert.Equal("Success", text2);
-
-		var bytes1 = await None.TestNoneAssets_NoneTest_txt.ReadAllBytesAsync(CancellationToken.None);
-
-		Assert.Equivalent(new byte[] { 239, 187, 191, 83, 117, 99, 99, 101, 115, 115 }, bytes1);
-
-		var bytes2 = None.TestNoneAssets_NoneTest_txt.ReadAllBytes();
-
-		Assert.Equivalent(new byte[] { 239, 187, 191, 83, 117, 99, 99, 101, 115, 115 }, bytes2);
-
-		var file = None.TestNoneAssets_NoneTest_txt.GetFileInfo();
-		Assert.True(file.Exists);
-	}
-
-	[Fact]
-	public void GetMatchesIsAccessible()
-	{
-		var allNones = Nones.GetMatches("**/**/*").ToArray();
-
-		Assert.Equivalent(new[]
+		[Fact]
+		public async Task NoneItemTestTxtIsAccessible()
 		{
-			None.TestNoneAssets_NoneTest_txt
-		}, allNones);
-	}
+			using var reader = None.TestNoneAssets_NoneTest_txt.GetReader();
+			Assert.Equal("Success", await reader.ReadToEndAsync());
 
-	public class NoneDataAttribute(string pattern) : DataAttribute
-	{
-		public override IEnumerable<object[]> GetData(System.Reflection.MethodInfo testMethod)
-		{
-			var matches = Nones.GetMatches(pattern);
-			return matches.Select(none => new object[] { none });
+			var text = None.TestNoneAssets_NoneTest_txt.ReadAllText();
+			Assert.Equal("Success", text);
+
+			var text2 = await None.TestNoneAssets_NoneTest_txt.ReadAllTextAsync(CancellationToken.None);
+			Assert.Equal("Success", text2);
+
+			var bytes1 = await None.TestNoneAssets_NoneTest_txt.ReadAllBytesAsync(CancellationToken.None);
+
+			Assert.Equivalent(new byte[] { 239, 187, 191, 83, 117, 99, 99, 101, 115, 115 }, bytes1);
+
+			var bytes2 = None.TestNoneAssets_NoneTest_txt.ReadAllBytes();
+
+			Assert.Equivalent(new byte[] { 239, 187, 191, 83, 117, 99, 99, 101, 115, 115 }, bytes2);
+
+			var file = None.TestNoneAssets_NoneTest_txt.GetFileInfo();
+			Assert.True(file.Exists);
 		}
-	}
 
-	[Theory]
-	[NoneData("**/**/*")]
-	public void PrintNonePath(None none)
-	{
-		testOutputHelper.WriteLine(none.GetNoneFilePath());
+		[Fact]
+		public void GetMatchesIsAccessible()
+		{
+			var allNones = Nones.GetMatches("**/**/*").ToArray();
+
+			Assert.Equivalent(new[]
+			{
+				None.TestNoneAssets_NoneTest_txt
+			}, allNones);
+		}
+
+		[Theory]
+		[Nones.FromPattern("**/**/*test.txt")]
+		public void PrintNonePath(None file)
+		{
+			testOutputHelper.WriteLine(file.GetNoneFilePath());
+		}
 	}
 }

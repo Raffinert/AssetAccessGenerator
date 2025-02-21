@@ -1,5 +1,6 @@
 ﻿namespace Raffinert.AccessGenerator.Core;
 
+using DotNet.Globbing;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using System.Text;
@@ -8,6 +9,8 @@ public static class FileAccessGenerator
 {
 	public static void GenerateCode(SourceProductionContext context, GenerationContext generationContext, ResourceKind kind)
 	{
+		GlobOptions.Default.Evaluation.CaseInsensitive = true;
+
 		var contentFiles = generationContext.With(kind);
 
 		if (contentFiles.IsEmpty)
@@ -20,14 +23,27 @@ public static class FileAccessGenerator
 		var getItemPathMethodName = $"Get{kindString}FilePath";
 
 		StringBuilder sourceBuilder = new();
-		sourceBuilder.AppendLine($$"""
+		sourceBuilder.AppendLine($"""
 		                           #nullable enable
-		                           namespace {{contentFiles.RootNamespace}};
+		                           namespace {contentFiles.RootNamespace};
 		                           using System;
 		                           using System.IO;
 		                           using System.Threading;
 		                           using System.Threading.Tasks;
+		                           """);
 
+		if (contentFiles.IsXunitDataAttributeAvailable)
+		{
+
+			sourceBuilder.AppendLine("""
+			                         using System.Reflection;
+			                         using Xunit.Sdk;
+			                         """);
+
+		}
+
+		sourceBuilder.AppendLine($$"""
+		                           
 		                           /// <summary>
 		                           /// Auto-generated class to access all {{kindLowerCase}} files in an assembly.
 		                           /// </summary>
@@ -60,7 +76,7 @@ public static class FileAccessGenerator
 		if (matchedFiles.Length == 0)
 		{
 			sourceBuilder.AppendLine($$"""
-										   return Enumerable.Empty<{{kindString}}>();
+									       return Enumerable.Empty<{{kindString}}>();
 									    }
 									""");
 		}
@@ -96,9 +112,30 @@ public static class FileAccessGenerator
 			sourceBuilder.AppendLine("""
 			                                 }
 			                             }
+			                             
 			                         """);
 		}
 
+		if (contentFiles.IsXunitDataAttributeAvailable)
+		{
+
+			sourceBuilder.AppendLine($$"""
+			                             /// <summary>
+			                             /// An xUnit attribute designed for use with the [Theory] attribute, which returns a collection of {{kindLowerCase}} files matching the specified pattern literal.
+			                             /// </summary>
+			                             /// <param name="pattern">The search pattern literal to match {{kindLowerCase}} files.</param>
+			                             public class FromPatternAttribute(string pattern) : DataAttribute
+			                             {
+			                                 public override IEnumerable<object[]> GetData(MethodInfo testMethod)
+			                                 {
+			                                     var matches = GetMatches(pattern);
+			                                     return matches.Select(none => new object[] { none });
+			                                 }
+			                             }
+			                         
+			                         """);
+
+		}
 
 		sourceBuilder.AppendLine($$"""
 		                           	/// <summary>
@@ -108,7 +145,7 @@ public static class FileAccessGenerator
 		                           	/// <returns>The stream to access the {{kindLowerCase}} file.</returns>
 		                           	public static Stream GetStream(this {{kindString}} file)
 		                           	{
-		                           		return File.OpenRead({{getItemPathMethodName}}(file))!;
+		                           	    return File.OpenRead({{getItemPathMethodName}}(file))!;
 		                           	}
 		                           
 		                           	/// <summary>
@@ -118,7 +155,7 @@ public static class FileAccessGenerator
 		                           	/// <returns>The stream-reader to access the {{kindLowerCase}} file.</returns>
 		                           	public static StreamReader GetReader(this {{kindString}} file)
 		                           	{
-		                           		return new StreamReader(File.OpenRead({{getItemPathMethodName}}(file))!, leaveOpen:false);
+		                           	    return new StreamReader(File.OpenRead({{getItemPathMethodName}}(file))!, leaveOpen:false);
 		                           	}
 		                           	
 		                           	/// <summary>
@@ -176,25 +213,25 @@ public static class FileAccessGenerator
 		                           """);
 
 		sourceBuilder.AppendLine($$"""
-		                         	/// <summary>
-		                         	/// Gets the {{kindLowerCase}} file's path.
-		                         	/// </summary>
-		                         	/// <param name="file">The {{kindLowerCase}} file to retrieve the name for.</param>
-		                         	/// <returns>The path to access the {{kindLowerCase}} file.</returns>
-		                         	public static string {{getItemPathMethodName}}(this {{kindString}} file)
-		                         	{
-		                         		return file switch 
-		                         		{
-		                         """);
+		                           	/// <summary>
+		                           	/// Gets the {{kindLowerCase}} file's path.
+		                           	/// </summary>
+		                           	/// <param name="file">The {{kindLowerCase}} file to retrieve the name for.</param>
+		                           	/// <returns>The path to access the {{kindLowerCase}} file.</returns>
+		                           	public static string {{getItemPathMethodName}}(this {{kindString}} file)
+		                           	{
+		                           	    return file switch 
+		                           	    {
+		                           """);
 
 		foreach ((string path, string identifierName, string _, _) in contentFiles)
 		{
 			sourceBuilder.AppendLine($$"""
-			                           			{{kindString}}.{{identifierName}} => @"{{path}}",
+			                           	        {{kindString}}.{{identifierName}} => @"{{path}}",
 			                           """);
 		}
 
-		sourceBuilder.AppendLine("""			_ => throw new InvalidOperationException(),""");
+		sourceBuilder.AppendLine("""            _ => throw new InvalidOperationException(),""");
 
 		sourceBuilder.AppendLine("        };");
 
@@ -215,7 +252,7 @@ public static class FileAccessGenerator
 				                           	/// <returns>The stream to access the {{kindLowerCase}} file.</returns>
 				                           	public static Stream GetStream(this {{kindString}}_{{pathAsClassName}} file)
 				                           	{
-				                           		return File.OpenRead({{getItemPathMethodName}}(file))!;
+				                           	    return File.OpenRead({{getItemPathMethodName}}(file))!;
 				                           	}
 				                           
 				                           	/// <summary>
@@ -225,7 +262,7 @@ public static class FileAccessGenerator
 				                           	/// <returns>The stream-reader to access the {{kindLowerCase}} file.</returns>
 				                           	public static StreamReader GetReader(this {{kindString}}_{{pathAsClassName}} file)
 				                           	{
-				                           		return new StreamReader(File.OpenRead({{getItemPathMethodName}}(file))!, leaveOpen:false);
+				                           	    return new StreamReader(File.OpenRead({{getItemPathMethodName}}(file))!, leaveOpen:false);
 				                           	}
 				                           	
 				                           	/// <summary>
@@ -281,8 +318,8 @@ public static class FileAccessGenerator
 				                           	/// <returns>The name to access the {{kindLowerCase}} file.</returns>
 				                           	public static string {{getItemPathMethodName}}(this {{kindString}}_{{pathAsClassName}} file)
 				                           	{
-				                           		return file switch 
-				                           		{
+				                           	    return file switch 
+				                           	    {
 				                           """);
 
 				foreach ((string relativePath, string identifierName, string resourceName, _) in pathGrouped)
@@ -290,11 +327,11 @@ public static class FileAccessGenerator
 					string nonPathedIdentifierName = Utils.GetValidIdentifierName(Path.GetFileName(relativePath));
 
 					sourceBuilder.AppendLine($$"""
-					                           			{{kindString}}_{{pathAsClassName}}.{{nonPathedIdentifierName}} => @"{{relativePath}}",
+					                           	        {{kindString}}_{{pathAsClassName}}.{{nonPathedIdentifierName}} => @"{{relativePath}}",
 					                           """);
 				}
 
-				sourceBuilder.AppendLine("""			_ => throw new InvalidOperationException(),""");
+				sourceBuilder.AppendLine("""            _ => throw new InvalidOperationException(),""");
 
 				sourceBuilder.AppendLine("        };");
 
@@ -306,12 +343,12 @@ public static class FileAccessGenerator
 
 		sourceBuilder.AppendLine($$"""
 
-		                         /// <summary>
-		                         /// Auto-generated enumeration for all {{kindLowerCase}} files in the assembly.
-		                         /// </summary>
-		                         public enum {{kindString}}
-		                         {
-		                         """);
+		                           /// <summary>
+		                           /// Auto-generated enumeration for all {{kindLowerCase}} files in the assembly.
+		                           /// </summary>
+		                           public enum {{kindString}}
+		                           {
+		                           """);
 
 		foreach ((string _, string identifierName, string resourceName, _) in contentFiles)
 		{
@@ -345,11 +382,11 @@ public static class FileAccessGenerator
 					string nonPathedIdentifierName = Utils.GetValidIdentifierName(Path.GetFileName(item.RelativePath));
 
 					sourceBuilder.AppendLine($"""
-					                           	/// <summary>
-					                           	/// Represents the {kindLowerCase} file '{Path.GetFileName(item.RelativePath)}' in {pathGrouped.Key}.
-					                           	/// </summary>
-					                           	{nonPathedIdentifierName},
-					                           """);
+					                          	/// <summary>
+					                          	/// Represents the {kindLowerCase} file '{Path.GetFileName(item.RelativePath)}' in {pathGrouped.Key}.
+					                          	/// </summary>
+					                          	{nonPathedIdentifierName},
+					                          """);
 				}
 
 				sourceBuilder.AppendLine("}");

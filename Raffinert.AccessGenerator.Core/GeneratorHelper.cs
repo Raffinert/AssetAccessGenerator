@@ -13,6 +13,9 @@ public static class GeneratorHelper
 
 		var typeName = $"{resourceKind}s";
 
+		var isXunitDataAttributeAvailable = context.CompilationProvider
+			.Select((c, _) => IsXUnitDataAttributeAvailable(c));
+
 		// We need a value provider for any addition file.
 		// As soon as there is direct access to embedded resources we can change this.
 		// All embedded resources are added as additional files through our build props integrated into the nuget.
@@ -79,21 +82,49 @@ public static class GeneratorHelper
 				.CreateSyntaxProvider(
 					predicate: (node, _) =>
 					{
-						if (node is not InvocationExpressionSyntax invocation) return false;
-						if (invocation.Expression is not MemberAccessExpressionSyntax memberAccess) return false;
-						if (memberAccess.Name.Identifier.Text != "GetMatches") return false;
-						if (memberAccess.Expression is not IdentifierNameSyntax isx) return false;
-						return isx.Identifier.Text == typeName;
+						// Detect method calls: GetMatches
+						if (node is InvocationExpressionSyntax invocation)
+						{
+							if (invocation.Expression is not MemberAccessExpressionSyntax memberAccess) return false;
+							if (memberAccess.Name.Identifier.Text != "GetMatches") return false;
+							if (memberAccess.Expression is not IdentifierNameSyntax isx) return false;
+							return isx.Identifier.Text == typeName;
+						}
+
+						// Detect attribute: [FromPattern("**/**/*")] or [FromPatternAttribute("**/**/*")]
+						if (node is AttributeSyntax attribute)
+						{
+							var identifier = attribute.Name as IdentifierNameSyntax;
+							var qns = attribute.Name as QualifiedNameSyntax;
+
+							var isCorrectIdentifier = (identifier != null || qns != null) &&
+													  (qns?.Right ?? identifier)?.Identifier.Text is ("FromPattern" or "FromPatternAttribute");
+
+							var isCorrectParent = qns?.Left == null ||
+												  (qns.Left as SimpleNameSyntax)?.Identifier.Text == typeName;
+
+							return isCorrectIdentifier && isCorrectParent;
+						}
+
+						return false;
+
 					},
 					transform: static (ctx, _) =>
 					{
-						var invocation = (InvocationExpressionSyntax)ctx.Node;
-
-						if (invocation.ArgumentList.Arguments.Count == 1 &&
+						if (ctx.Node is InvocationExpressionSyntax invocation &&
+							invocation.ArgumentList.Arguments.Count == 1 &&
 							invocation.ArgumentList.Arguments[0].Expression is LiteralExpressionSyntax literal &&
 							literal.Kind() == SyntaxKind.StringLiteralExpression)
 						{
 							return literal.Token.ValueText;
+						}
+
+						if (ctx.Node is AttributeSyntax attribute &&
+							attribute.ArgumentList?.Arguments.Count > 0 &&
+							attribute.ArgumentList.Arguments[0].Expression is LiteralExpressionSyntax attrLiteral &&
+							attrLiteral.Kind() == SyntaxKind.StringLiteralExpression)
+						{
+							return attrLiteral.Token.ValueText;
 						}
 
 						return null;
@@ -101,24 +132,24 @@ public static class GeneratorHelper
 				.Where(pattern => pattern is not null)
 				.Collect();
 
-		// We combine the providers to generate the parameters for our source generation.
 		IncrementalValueProvider<GenerationContext> combined = additionalFilesProvider
 			.Combine(rootNamespaceProvider
-				.Combine(buildProjectDirProvider)
-				.Combine(globPatternsProvider)) // Adding globPatternsProvider here
-			.Select((c, _) => (c.Left, c.Right.Left.Left, c.Right.Left.Right, c.Right.Right))
+			.Combine(buildProjectDirProvider)
+			.Combine(globPatternsProvider))
+			.Combine(isXunitDataAttributeAvailable)
+			.Select((c, _) => (c.Left.Left, c.Left.Right.Left.Left, c.Left.Right.Left.Right, c.Left.Right.Right, c.Right))
 			.Select(GeneratorHelper.MapToResourceGenerationContext);
 
 		return combined;
 	}
 
-	private static GenerationContext MapToResourceGenerationContext((ImmutableArray<(string Path, ResourceKind Kind)>, string, string, ImmutableArray<string>) valueTuple, CancellationToken cancellationToken)
+	private static GenerationContext MapToResourceGenerationContext((ImmutableArray<(string Path, ResourceKind Kind)>, string, string, ImmutableArray<string>, bool) valueTuple, CancellationToken cancellationToken)
 	{
-		var (pathAndKinds, rootNamespace, buildProjectDir, matchesLiterals) = valueTuple;
+		var (pathAndKinds, rootNamespace, buildProjectDir, matchesLiterals, isXunitDataAttributeAvailable) = valueTuple;
 
 		if (buildProjectDir == null || rootNamespace == null)
 		{
-			return new GenerationContext(ImmutableArray<ResourceItem>.Empty, rootNamespace ?? "EmptyRootNamespace", ImmutableArray<string>.Empty);
+			return new GenerationContext(ImmutableArray<ResourceItem>.Empty, rootNamespace ?? "EmptyRootNamespace", ImmutableArray<string>.Empty, false);
 		}
 
 		return new GenerationContext(pathAndKinds.Select(pathAndKind =>
@@ -129,6 +160,16 @@ public static class GeneratorHelper
 				// trick to skip testhost.exe and testhost.dll and other files that are external to the solution
 				var kind = pathAndKind.Path.IsSubPathOf(buildProjectDir) ? pathAndKind.Kind : ResourceKind.Unspecified;
 				return new ResourceItem(resourcePath, identifierName, resourceName, kind);
-			}).ToImmutableArray(), rootNamespace, matchesLiterals);
+			}).ToImmutableArray(), rootNamespace, matchesLiterals, isXunitDataAttributeAvailable);
+	}
+
+	public static bool IsXUnitDataAttributeAvailable(Compilation compilation)
+	{
+		return TryLoadSymbol(compilation, "Xunit.Sdk.DataAttribute") != null;
+	}
+
+	private static INamedTypeSymbol? TryLoadSymbol(Compilation compilation, string symbolName)
+	{
+		return compilation.GetTypeByMetadataName(symbolName)?.OriginalDefinition;
 	}
 }

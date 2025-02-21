@@ -1,8 +1,9 @@
 ﻿namespace Raffinert.AssetAccessGenerator.Tests.Tests;
 
 using Xunit;
+using Xunit.Abstractions;
 
-public class ContentFilesTests
+public class ContentFilesTests(ITestOutputHelper testOutputHelper)
 {
 	[Fact]
 	public async Task ContentTestTxtIsAccessible()
@@ -44,5 +45,12 @@ public class ContentFilesTests
 			Content.TestContentAssets_ContentTest_txt,
 			Content.TestContentAssets_OneMoreLevel_Test_txt
 		}, allContents);
+	}
+
+	[Theory]
+	[Contents.FromPattern("**/**/cont*")]
+	public void PrintContentPath(Content file)
+	{
+		testOutputHelper.WriteLine(file.GetContentFilePath());
 	}
 }

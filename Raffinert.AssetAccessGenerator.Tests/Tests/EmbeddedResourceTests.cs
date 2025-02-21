@@ -2,12 +2,13 @@
 
 using System.Diagnostics;
 using Xunit;
+using Xunit.Abstractions;
 
 /// <summary>
 /// The main tests. This file is deliberately not in the root folder to test that the generator works no
 /// files in the csproj folder.
 /// </summary>
-public class EmbeddedAssetAccessGeneratorTests
+public class EmbeddedAssetAccessGeneratorTests(ITestOutputHelper testOutputHelper)
 {
 	[Fact]
 	public void TestTxtIsAccessible()
@@ -111,5 +112,12 @@ public class EmbeddedAssetAccessGeneratorTests
 			EmbeddedResource._InvalidChars___txt,
 			EmbeddedResource.Test_txt
 		}, allEmbeddedResources);
+	}
+
+	[Theory]
+	[EmbeddedResources.FromPattern("**/**/2*")]
+	public void PrintEmbeddedResource(EmbeddedResource file)
+	{
+		testOutputHelper.WriteLine(file.ToString());
 	}
 }

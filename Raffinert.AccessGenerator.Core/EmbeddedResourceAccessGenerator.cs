@@ -16,30 +16,42 @@ public static class EmbeddedResourceAccessGenerator
 		}
 
 		StringBuilder sourceBuilder = new();
-		sourceBuilder.AppendLine($$$"""
-		                           #nullable enable
-		                           namespace {{{embeddedResources.RootNamespace}}};
-		                           using System;
-		                           using System.IO;
-		                           using System.Reflection;
-		                           using System.Threading;
-		                           using System.Threading.Tasks;
+		sourceBuilder.AppendLine($"""
+		                            #nullable enable
+		                            namespace {embeddedResources.RootNamespace};
+		                            using System;
+		                            using System.IO;
+		                            using System.Reflection;
+		                            using System.Threading;
+		                            using System.Threading.Tasks;
+		                            """);
 
-		                           /// <summary>
-		                           /// Auto-generated class to access all embedded resources in an assembly.
-		                           /// </summary>
-		                           public static partial class EmbeddedResources
-		                           {
-		                               /// <summary>
-		                               /// Retrieves a collection of embedded resources that match the specified pattern literal.
-		                               /// </summary>
-		                               /// <param name="pattern">The search pattern literal to match embedded resources.</param>
-		                               /// <returns>
-		                               /// An <see cref="IEnumerable{EmbeddedResource}"/> containing the matched embedded resources.
-		                               /// </returns>
-		                               public static IEnumerable<EmbeddedResource> GetMatches(string pattern)
-		                               {
-		                           """);
+		if (embeddedResources.IsXunitDataAttributeAvailable)
+		{
+
+			sourceBuilder.AppendLine("""
+			                         using System.Reflection;
+			                         using Xunit.Sdk;
+			                         """);
+
+		}
+
+		sourceBuilder.AppendLine("""
+		                         /// <summary>
+		                         /// Auto-generated class to access all embedded resources in an assembly.
+		                         /// </summary>
+		                         public static partial class EmbeddedResources
+		                         {
+		                             /// <summary>
+		                             /// Retrieves a collection of embedded resources that match the specified pattern literal.
+		                             /// </summary>
+		                             /// <param name="pattern">The search pattern literal to match embedded resources.</param>
+		                             /// <returns>
+		                             /// An <see cref="IEnumerable{EmbeddedResource}"/> containing the matched embedded resources.
+		                             /// </returns>
+		                             public static IEnumerable<EmbeddedResource> GetMatches(string pattern)
+		                             {
+		                         """);
 
 		var parsedGlobs = embeddedResources.MatchesLiterals
 			.Distinct()
@@ -92,10 +104,30 @@ public static class EmbeddedResourceAccessGenerator
 			sourceBuilder.AppendLine("""
 			                                 }
 			                             }
+			                             
 			                         """);
 		}
 
+		if (embeddedResources.IsXunitDataAttributeAvailable)
+		{
 
+			sourceBuilder.AppendLine("""
+			                             /// <summary>
+			                             /// An xUnit attribute designed for use with the [Theory] attribute, which returns a collection of embedded resources matching the specified pattern literal.
+			                             /// </summary>
+			                             /// <param name="pattern">The search pattern literal to match embedded resources.</param>
+			                             public class FromPatternAttribute(string pattern) : DataAttribute
+			                             {
+			                                 public override IEnumerable<object[]> GetData(MethodInfo testMethod)
+			                                 {
+			                                     var matches = GetMatches(pattern);
+			                                     return matches.Select(none => new object[] { none });
+			                                 }
+			                             }
+
+			                         """);
+
+		}
 
 		sourceBuilder.AppendLine("""
 		                         	/// <summary>
@@ -180,18 +212,18 @@ public static class EmbeddedResourceAccessGenerator
 		                         	/// <returns>The name to access the embedded resource.</returns>
 		                         	public static string GetResourceName(this EmbeddedResource resource)
 		                         	{
-		                         		return resource switch 
-		                         		{
+		                         	    return resource switch 
+		                         	    {
 		                         """);
 
 		foreach ((string _, string identifierName, string resourceName, _) in embeddedResources)
 		{
 			sourceBuilder.AppendLine($$"""
-			                           			EmbeddedResource.{{identifierName}} => "{{embeddedResources.RootNamespace}}.{{resourceName}}",
+			                           	        EmbeddedResource.{{identifierName}} => "{{embeddedResources.RootNamespace}}.{{resourceName}}",
 			                           """);
 		}
 
-		sourceBuilder.AppendLine("""			_ => throw new InvalidOperationException(),""");
+		sourceBuilder.AppendLine("""            _ => throw new InvalidOperationException(),""");
 
 		sourceBuilder.AppendLine("        };");
 
@@ -212,8 +244,8 @@ public static class EmbeddedResourceAccessGenerator
 				                           	/// <returns>The stream to access the embedded resource.</returns>
 				                           	public static Stream GetStream(this EmbeddedResource_{{pathAsClassName}} resource)
 				                           	{
-				                           		Assembly assembly = typeof(EmbeddedResources).Assembly;
-				                           		return assembly.GetManifestResourceStream(GetResourceName(resource))!;
+				                           	    Assembly assembly = typeof(EmbeddedResources).Assembly;
+				                           	    return assembly.GetManifestResourceStream(GetResourceName(resource))!;
 				                           	}
 				                           
 				                           	/// <summary>
@@ -223,8 +255,8 @@ public static class EmbeddedResourceAccessGenerator
 				                           	/// <returns>The stream-reader to access the embedded resource.</returns>
 				                           	public static StreamReader GetReader(this EmbeddedResource_{{pathAsClassName}} resource)
 				                           	{
-				                           		Assembly assembly = typeof(EmbeddedResources).Assembly;
-				                           		return new StreamReader(assembly.GetManifestResourceStream(GetResourceName(resource))!, leaveOpen:false);
+				                           	    Assembly assembly = typeof(EmbeddedResources).Assembly;
+				                           	    return new StreamReader(assembly.GetManifestResourceStream(GetResourceName(resource))!, leaveOpen:false);
 				                           	}
 				                           	
 				                           	/// <summary>
@@ -288,8 +320,8 @@ public static class EmbeddedResourceAccessGenerator
 				                           	/// <returns>The name to access the embedded resource.</returns>
 				                           	public static string GetResourceName(this EmbeddedResource_{{pathAsClassName}} resource)
 				                           	{
-				                           		return resource switch 
-				                           		{
+				                           	    return resource switch 
+				                           	    {
 				                           """);
 
 				foreach ((string relativePath, string identifierName, string resourceName, _) in pathGrouped)
@@ -297,11 +329,11 @@ public static class EmbeddedResourceAccessGenerator
 					string nonPathedIdentifierName = Utils.GetValidIdentifierName(Path.GetFileName(relativePath));
 
 					sourceBuilder.AppendLine($$"""
-					                           			EmbeddedResource_{{pathAsClassName}}.{{nonPathedIdentifierName}} => "{{embeddedResources.RootNamespace}}.{{resourceName}}",
+					                           	        EmbeddedResource_{{pathAsClassName}}.{{nonPathedIdentifierName}} => "{{embeddedResources.RootNamespace}}.{{resourceName}}",
 					                           """);
 				}
 
-				sourceBuilder.AppendLine("""			_ => throw new InvalidOperationException(),""");
+				sourceBuilder.AppendLine("""            _ => throw new InvalidOperationException(),""");
 
 				sourceBuilder.AppendLine("        };");
 
