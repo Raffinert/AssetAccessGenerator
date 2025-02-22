@@ -48,7 +48,7 @@ byte[] bytesAsync = await None_TestAsset.Test_txt.ReadAllBytesAsync(Cancellation
 ### Using `GetMatches` for Pattern Matching
 
 ```csharp
-var matches = Nones.GetMatches("**/**");
+var matches = Nones.GetMatches("**/*");
 foreach (var none in matches)
 {
     Console.WriteLine(none);
@@ -60,7 +60,7 @@ foreach (var none in matches)
 
 ```csharp
 [Theory]
-[Nones.FromPattern("**/**/*test.txt")]
+[Nones.FromPattern("**/*test.txt")]
 public void PrintNonePath(None file)
 {
     testOutputHelper.WriteLine(file.GetNoneFilePath());
