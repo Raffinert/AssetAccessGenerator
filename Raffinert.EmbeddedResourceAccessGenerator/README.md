@@ -31,48 +31,47 @@ E.g. for a `Test.txt` embedded resource in the `TestAsset` folder:
 - Via enum access through the `EmbeddedResource` enum:
 
 ```csharp
-    // Via the generated extension methods on the enum
-    using Stream s = EmbeddedResource.TestAsset_Test_txt.GetStream();
-    using StreamReader sr = EmbeddedResource.TestAsset_Test_txt.GetReader();
-    string text = EmbeddedResource.TestAsset_Test_txt.ReadAllText();
-    string textAsync = await EmbeddedResource.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
-    byte[] bytes = EmbeddedResource.TestAsset_Test_txt.ReadAllBytes();
-    byte[] bytesAsync = await EmbeddedResource.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
-
+// Via the generated extension methods on the enum
+using Stream s = EmbeddedResource.TestAsset_Test_txt.GetStream();
+using StreamReader sr = EmbeddedResource.TestAsset_Test_txt.GetReader();
+string text = EmbeddedResource.TestAsset_Test_txt.ReadAllText();
+string textAsync = await EmbeddedResource.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
+byte[] bytes = EmbeddedResource.TestAsset_Test_txt.ReadAllBytes();
+byte[] bytesAsync = await EmbeddedResource.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 - Via enum access through the `EmbeddedResource[FolderName]` enum:
 
 ```csharp
-    // Via the generated extension methods on the enum
-    using Stream s = EmbeddedResource_TestAsset.Test_txt.GetStream();
-    using StreamReader sr = EmbeddedResource_TestAsset.Test_txt.GetReader();
-    string text = EmbeddedResource_TestAsset.Test_txt.ReadAllText();
-    string textAsync = await EmbeddedResource_TestAsset.Test_txt.ReadAllTextAsync(CancellationToken.None);
-    byte[] bytes = EmbeddedResource_TestAsset.Test_txt.ReadAllBytes();
-    byte[] bytesAsync = await EmbeddedResource_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
+// Via the generated extension methods on the enum
+using Stream s = EmbeddedResource_TestAsset.Test_txt.GetStream();
+using StreamReader sr = EmbeddedResource_TestAsset.Test_txt.GetReader();
+string text = EmbeddedResource_TestAsset.Test_txt.ReadAllText();
+string textAsync = await EmbeddedResource_TestAsset.Test_txt.ReadAllTextAsync(CancellationToken.None);
+byte[] bytes = EmbeddedResource_TestAsset.Test_txt.ReadAllBytes();
+byte[] bytesAsync = await EmbeddedResource_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 ### Using `GetMatches` for Pattern Matching
 
 ```csharp
-    var matches = EmbeddedResources.GetMatches("**/*e?/*");
-    foreach (var resource in matches)
-    {
-        Console.WriteLine(resource);
-    }
+var matches = EmbeddedResources.GetMatches("**/*e?/*");
+foreach (var resource in matches)
+{
+    Console.WriteLine(resource);
+}
 ```
 
 
 ### xUnit integration
 
 ```csharp
-    [Theory]
-    [EmbeddedResources.FromPattern("**/**/*")]
-    public void PrintEmbeddedResource(EmbeddedResource file)
-    {
-        testOutputHelper.WriteLine(file.ToString());
-    }
+[Theory]
+[EmbeddedResources.FromPattern("**/**/*")]
+public void PrintEmbeddedResource(EmbeddedResource file)
+{
+    testOutputHelper.WriteLine(file.ToString());
+}
 ```
 
 ## Motivation
