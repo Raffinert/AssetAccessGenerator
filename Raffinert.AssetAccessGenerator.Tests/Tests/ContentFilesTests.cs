@@ -38,7 +38,7 @@ public class ContentFilesTests(ITestOutputHelper testOutputHelper)
 	[Fact]
 	public void GetMatchesIsAccessible()
 	{
-		var allContents = Contents.GetMatches("**/**/*").ToArray();
+		var allContents = Contents.GetMatches("**/*").ToArray();
 
 		Assert.Equivalent(new[]
 		{
@@ -48,7 +48,7 @@ public class ContentFilesTests(ITestOutputHelper testOutputHelper)
 	}
 
 	[Theory]
-	[Contents.FromPattern("**/**/cont*")]
+	[Contents.FromPattern("testcontentassets/**")]
 	public void PrintContentPath(Content file)
 	{
 		testOutputHelper.WriteLine(file.GetContentFilePath());

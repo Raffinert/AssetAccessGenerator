@@ -32,7 +32,7 @@
 		[Fact]
 		public void GetMatchesIsAccessible()
 		{
-			var allNones = Nones.GetMatches("**/**/*").ToArray();
+			var allNones = Nones.GetMatches("**/*").ToArray();
 
 			Assert.Equivalent(new[]
 			{
@@ -41,7 +41,7 @@
 		}
 
 		[Theory]
-		[Nones.FromPattern("**/**/*test.txt")]
+		[Nones.FromPattern("testnoneassets/**")]
 		public void PrintNonePath(None file)
 		{
 			testOutputHelper.WriteLine(file.GetNoneFilePath());

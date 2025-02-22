@@ -99,7 +99,7 @@ public class EmbeddedAssetAccessGeneratorTests(ITestOutputHelper testOutputHelpe
 	[Fact]
 	public void GetMatchesIsAccessible()
 	{
-		var allEmbeddedResources = EmbeddedResources.GetMatches("**/**/*").ToArray();
+		var allEmbeddedResources = EmbeddedResources.GetMatches("**/*").ToArray();
 
 		Assert.Equivalent(new[]
 		{
@@ -115,7 +115,7 @@ public class EmbeddedAssetAccessGeneratorTests(ITestOutputHelper testOutputHelpe
 	}
 
 	[Theory]
-	[EmbeddedResources.FromPattern("**/**/2*")]
+	[EmbeddedResources.FromPattern("**/2*")]
 	public void PrintEmbeddedResource(EmbeddedResource file)
 	{
 		testOutputHelper.WriteLine(file.ToString());
