@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using System.Text;
 
-public static class FileAccessGenerator
+internal static class FileAccessGenerator
 {
 	public static void GenerateCode(SourceProductionContext context, GenerationContext generationContext, ResourceKind kind)
 	{

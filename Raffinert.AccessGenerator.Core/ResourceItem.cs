@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 /// <summary>
 /// Represents a resource item.
 /// </summary>
-public record ResourceItem(
+internal record ResourceItem(
 	string RelativePath,
 	string IdentifierName,
 	string ResourceName,
@@ -36,7 +36,7 @@ public record ResourceItem(
 /// <summary>
 /// Represents the kind of resource.
 /// </summary>
-public enum ResourceKind
+internal enum ResourceKind
 {
 	Unspecified,
 	EmbeddedResource,
@@ -47,7 +47,7 @@ public enum ResourceKind
 /// <summary>
 /// Represents the context for resource generation.
 /// </summary>
-public record GenerationContext(
+internal record GenerationContext(
 	ImmutableArray<ResourceItem> Resources,
 	string RootNamespace,
 	ImmutableArray<string> MatchesLiterals,
