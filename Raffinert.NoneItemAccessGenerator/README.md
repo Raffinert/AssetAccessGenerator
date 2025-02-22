@@ -5,7 +5,7 @@ A refined version of the original [EmbeddedResourceAccessGenerator](https://gith
 *Important*: The original EmbeddedResourceAccessGenerator is incompatible with this generator and must be removed before adding this generator.
 
 # NoneItemAccessGenerator
-[![NuGet version (Chorn.NoneItemAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.NoneItemAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.NoneItemAccessGenerator/)
+[![NuGet version (Raffinert.NoneItemAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.NoneItemAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.NoneItemAccessGenerator/)
 
 The Raffinert.NoneItemAccessGenerator is a code generator to allow easy access to all
 none item files with **CopyToOutputDirectory attribute specified as Always or PreserveNewest**.
