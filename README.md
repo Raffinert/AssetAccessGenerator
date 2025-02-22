@@ -98,7 +98,7 @@ public void PrintContentPath(Content file)
 
 
 # NoneItemAccessGenerator
-[![NuGet version (Chorn.NoneItemAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.NoneItemAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.NoneItemAccessGenerator/)
+[![NuGet version (Raffinert.NoneItemAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.NoneItemAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.NoneItemAccessGenerator/)
 
 The Raffinert.NoneItemAccessGenerator is a code generator to allow easy access to all
 none item files with **CopyToOutputDirectory attribute specified as Always or PreserveNewest**.
