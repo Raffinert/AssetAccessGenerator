@@ -9,7 +9,7 @@ Improvements in the EmbeddedResourceAccessGenerator:
 * The GetReader method now creates the StreamReader with the option leaveOpen: false. It disposes the stream together with the StreamReader.
 * Added synchronous and asynchronous extension methods ReadAllText, ReadAllTextAsync, ReadAllBytes, ReadAllBytesAsync.
 * Added `GetMatches` method for filesystem globbing support (be careful - it supports only string literals).
-* Added [FromPattern] xUnit attribute for use with the [Theory] attribute.
+* Added `[FromPattern]` xUnit attribute for use with the `[Theory]` attribute.
 
 # EmbeddedResourceAccessGenerator
 [![NuGet version (Raffinert.EmbeddedResourceAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.EmbeddedResourceAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.EmbeddedResourceAccessGenerator/)
