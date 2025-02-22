@@ -27,9 +27,11 @@ internal static class FileAccessGenerator
 		                           #nullable enable
 		                           namespace {contentFiles.RootNamespace};
 		                           using System;
+		                           using System.Collections.Generic;
 		                           using System.IO;
-		                           using System.Threading;
+		                           using System.Linq;
 		                           using System.Threading.Tasks;
+		                           using System.Threading;
 		                           """);
 
 		if (contentFiles.IsXunitDataAttributeAvailable)

@@ -20,17 +20,18 @@ internal static class EmbeddedResourceAccessGenerator
 		                            #nullable enable
 		                            namespace {embeddedResources.RootNamespace};
 		                            using System;
+		                            using System.Collections.Generic;
 		                            using System.IO;
+		                            using System.Linq;
 		                            using System.Reflection;
-		                            using System.Threading;
 		                            using System.Threading.Tasks;
+		                            using System.Threading;
 		                            """);
 
 		if (embeddedResources.IsXunitDataAttributeAvailable)
 		{
 
 			sourceBuilder.AppendLine("""
-			                         using System.Reflection;
 			                         using Xunit.Sdk;
 			                         """);
 

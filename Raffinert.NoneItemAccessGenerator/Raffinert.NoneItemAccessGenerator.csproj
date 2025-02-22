@@ -5,26 +5,27 @@
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Authors>Christoph Hornung, Yevhen Cherkes</Authors>
+		<Authors>Yevhen Cherkes</Authors>
 		<PackageId>Raffinert.NoneItemAccessGenerator</PackageId>
-		<Version>1.0.10</Version>
-		<Copyright>Christoph Hornung, Yevhen Cherkes</Copyright>
+		<Version>1.0.11</Version>
+		<Copyright>Yevhen Cherkes</Copyright>
 		<Description>Generates strongly typed access methods for none item files.</Description>
 		<PackageProjectUrl>https://github.com/Raffinert/AssetAccessGenerator</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Raffinert/AssetAccessGenerator</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>
-			v 1.0.10 - Add Nones.[FromPattern] xUnit attribute for use with the [Theory] attribute.
-			v 1.0.9 - Remove dependency on DotNet.Glob.
-			v 1.0.8 - Add Nones.GetMatches method.
-			v 1.0.7 - Downgrade version of Microsoft.CodeAnalysis.CSharp to be compatible with entityframework design tools.
-			v 1.0.6 - Add GetFileInfo extension.
-			v 1.0.5 - Fix missing using System.Threading directive.
-			v 1.0.4 - Fix missing using System.Threading.Tasks directive.
-			v 1.0.3 - Separate readmes between the projects and update them.
-			v 1.0.2 - Added ReadAllBytes and ReadAllBytesAsync methods
-			v.1.0.1 - Fix the msbuild condition
-			v.1.0.0 - Initial release.
+			v 1.0.11 - Add missing usings to the generated code.
+			v 1.0.10 - Add Nones.FromPattern xUnit attribute for use with the Theory attribute.
+			v 1.0.9  - Remove dependency on DotNet.Glob.
+			v 1.0.8  - Add Nones.GetMatches method.
+			v 1.0.7  - Downgrade version of Microsoft.CodeAnalysis.CSharp to be compatible with entityframework design tools.
+			v 1.0.6  - Add GetFileInfo extension.
+			v 1.0.5  - Fix missing using System.Threading directive.
+			v 1.0.4  - Fix missing using System.Threading.Tasks directive.
+			v 1.0.3  - Separate readmes between the projects and update them.
+			v 1.0.2  - Added ReadAllBytes and ReadAllBytesAsync methods
+			v.1.0.1  - Fix the msbuild condition
+			v.1.0.0  - Initial release.
 		</PackageReleaseNotes>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
