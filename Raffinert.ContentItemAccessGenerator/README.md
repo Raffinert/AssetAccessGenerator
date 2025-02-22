@@ -24,47 +24,47 @@ E.g. for a `Test.txt` content item in the `TestAsset` folder:
 - Via enum access through the `Content` enum:
 
 ```csharp
-    // Via the generated extension methods on the enum
-    using Stream s = Content.TestAsset_Test_txt.GetStream();
-    using StreamReader sr = Content.TestAsset_Test_txt.GetReader();
-    string text = Content.TestAsset_Test_txt.ReadAllText();
-    string textAsync = await Content.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
-    byte[] bytes = Content.TestAsset_Test_txt.ReadAllBytes();
-    byte[] bytesAsync = await Content.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
+// Via the generated extension methods on the enum
+using Stream s = Content.TestAsset_Test_txt.GetStream();
+using StreamReader sr = Content.TestAsset_Test_txt.GetReader();
+string text = Content.TestAsset_Test_txt.ReadAllText();
+string textAsync = await Content.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
+byte[] bytes = Content.TestAsset_Test_txt.ReadAllBytes();
+byte[] bytesAsync = await Content.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 - Via enum access through the `Content[FolderName]` enum:
 
 ```csharp
-    // Via the generated extension methods on the enum
-    using Stream s = Content_TestAsset.Test_txt.GetStream();
-    using StreamReader sr = Content_TestAsset.Test_txt.GetReader();
-    string text = Content_TestAsset.Test_txt.ReadAllText();
-    string textAsync = await Content_TestAsset.Test_txt.ReadAllTextAsync(CancellationToken.None);
-    byte[] bytes = Content_TestAsset.Test_txt.ReadAllBytes();
-    byte[] bytesAsync = await Content_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
+// Via the generated extension methods on the enum
+using Stream s = Content_TestAsset.Test_txt.GetStream();
+using StreamReader sr = Content_TestAsset.Test_txt.GetReader();
+string text = Content_TestAsset.Test_txt.ReadAllText();
+string textAsync = await Content_TestAsset.Test_txt.ReadAllTextAsync(CancellationToken.None);
+byte[] bytes = Content_TestAsset.Test_txt.ReadAllBytes();
+byte[] bytesAsync = await Content_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 ### Using `GetMatches` for Pattern Matching
 
 ```csharp
-    var matches = Contents.GetMatches("**/*?t/*");
-    foreach (var content in matches)
-    {
-        Console.WriteLine(content);
-    }
+var matches = Contents.GetMatches("**/*?t/*");
+foreach (var content in matches)
+{
+    Console.WriteLine(content);
+}
 ```
 
 
 ### xUnit integration
 
 ```csharp
-    [Theory]
-    [Contents.FromPattern("**/**/cont*")]
-    public void PrintContentPath(Content file)
-    {
-        testOutputHelper.WriteLine(file.GetContentFilePath());
-    }
+[Theory]
+[Contents.FromPattern("**/**/cont*")]
+public void PrintContentPath(Content file)
+{
+    testOutputHelper.WriteLine(file.GetContentFilePath());
+}
 ```
 
 ## See also:
