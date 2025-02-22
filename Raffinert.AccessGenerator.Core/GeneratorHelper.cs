@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Immutable;
 
-public static class GeneratorHelper
+internal static class GeneratorHelper
 {
 	public static IncrementalValueProvider<GenerationContext> GetConfiguredProvider(IncrementalGeneratorInitializationContext context, ResourceKind resourceKind)
 	{
