@@ -24,47 +24,47 @@ E.g. for a `Test.txt` none item in the `TestAsset` folder:
 - Via enum access through the `None` enum:
 
 ```csharp
-    // Via the generated extension methods on the enum
-    using Stream s = None.TestAsset_Test_txt.GetStream();
-    using StreamReader sr = None.TestAsset_Test_txt.GetReader();
-    string text = None.TestAsset_Test_txt.ReadAllText();
-    string textAsync = await None.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
-    byte[] bytes = None.TestAsset_Test_txt.ReadAllBytes();
-    byte[] bytesAsync = await None.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
+// Via the generated extension methods on the enum
+using Stream s = None.TestAsset_Test_txt.GetStream();
+using StreamReader sr = None.TestAsset_Test_txt.GetReader();
+string text = None.TestAsset_Test_txt.ReadAllText();
+string textAsync = await None.TestAsset_Test_txt.ReadAllTextAsync(CancellationToken.None);
+byte[] bytes = None.TestAsset_Test_txt.ReadAllBytes();
+byte[] bytesAsync = await None.TestAsset_Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 - Via enum access through the `None[FolderName]` enum:
 
 ```csharp
-    // Via the generated extension methods on the enum
-    using Stream s = None_TestAsset.Test_txt.GetStream();
-    using StreamReader sr = None_TestAsset.Test_txt.GetReader();
-    string text = None_TestAsset.Test_txt.ReadAllText();
-    string textAsync = await None_TestAsset.Test_txt.ReadAllTextAsync(CancellationToken.None);
-    byte[] bytes = None_TestAsset.Test_txt.ReadAllBytes();
-    byte[] bytesAsync = await None_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
+// Via the generated extension methods on the enum
+using Stream s = None_TestAsset.Test_txt.GetStream();
+using StreamReader sr = None_TestAsset.Test_txt.GetReader();
+string text = None_TestAsset.Test_txt.ReadAllText();
+string textAsync = await None_TestAsset.Test_txt.ReadAllTextAsync(CancellationToken.None);
+byte[] bytes = None_TestAsset.Test_txt.ReadAllBytes();
+byte[] bytesAsync = await None_TestAsset.Test_txt.ReadAllBytesAsync(CancellationToken.None);
 ```
 
 ### Using `GetMatches` for Pattern Matching
 
 ```csharp
-    var matches = Nones.GetMatches("**/**");
-    foreach (var none in matches)
-    {
-        Console.WriteLine(none);
-    }
+var matches = Nones.GetMatches("**/**");
+foreach (var none in matches)
+{
+    Console.WriteLine(none);
+}
 ```
 
 
 ### xUnit integration
 
 ```csharp
-    [Theory]
-    [Nones.FromPattern("**/**/*test.txt")]
-    public void PrintNonePath(None file)
-    {
-        testOutputHelper.WriteLine(file.GetNoneFilePath());
-    }
+[Theory]
+[Nones.FromPattern("**/**/*test.txt")]
+public void PrintNonePath(None file)
+{
+    testOutputHelper.WriteLine(file.GetNoneFilePath());
+}
 ```
 
 ## See also:
