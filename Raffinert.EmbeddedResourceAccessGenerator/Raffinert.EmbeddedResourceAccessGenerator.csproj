@@ -5,16 +5,17 @@
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Authors>Christoph Hornung, Yevhen Cherkes</Authors>
+		<Authors>Yevhen Cherkes, Christoph Hornung</Authors>
 		<PackageId>Raffinert.EmbeddedResourceAccessGenerator</PackageId>
-		<Version>1.0.8</Version>
-		<Copyright>Christoph Hornung, Yevhen Cherkes</Copyright>
+		<Version>1.0.9</Version>
+		<Copyright>Yevhen Cherkes, Christoph Hornung</Copyright>
 		<Description>Generates strongly typed access methods for embedded resources.</Description>
 		<PackageProjectUrl>https://github.com/Raffinert/AssetAccessGenerator</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Raffinert/AssetAccessGenerator</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>
-			v 1.0.8 - Add EmbeddedResources.[FromPattern] xUnit attribute for use with the [Theory] attribute.
+			v 1.0.9 - Add missing usings to the generated code.
+			v 1.0.8 - Add EmbeddedResources.FromPattern xUnit attribute for use with the Theory attribute.
 			v 1.0.7 - Remove dependency on DotNet.Glob.
 			v 1.0.6 - Add EmbeddedResources.GetMatches method.
 			v 1.0.5 - Downgrade version of Microsoft.CodeAnalysis.CSharp to be compatible with entityframework design tools.
