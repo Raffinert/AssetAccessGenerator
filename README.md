@@ -54,7 +54,7 @@ foreach (var resource in matches)
 
 ```csharp
 [Theory]
-[EmbeddedResources.FromPattern("**/**/*")]
+[EmbeddedResources.FromPattern("**/*")]
 public void PrintEmbeddedResource(EmbeddedResource file)
 {
     testOutputHelper.WriteLine(file.ToString());
@@ -89,7 +89,7 @@ foreach (var content in matches)
 
 ```csharp
 [Theory]
-[Contents.FromPattern("**/**/cont*")]
+[Contents.FromPattern("**/cont*")]
 public void PrintContentPath(Content file)
 {
     testOutputHelper.WriteLine(file.GetContentFilePath());
@@ -112,7 +112,7 @@ automatically create a class `Nones` in the root namespace of the project.
 ### Using `GetMatches` for Pattern Matching
 
 ```csharp
-var matches = Nones.GetMatches("**/**");
+var matches = Nones.GetMatches("**/*");
 foreach (var none in matches)
 {
     Console.WriteLine(none);
@@ -123,7 +123,7 @@ foreach (var none in matches)
 
 ```csharp
 [Theory]
-[Nones.FromPattern("**/**/*test.txt")]
+[Nones.FromPattern("**/*test.txt")]
 public void PrintNonePath(None file)
 {
     testOutputHelper.WriteLine(file.GetNoneFilePath());
