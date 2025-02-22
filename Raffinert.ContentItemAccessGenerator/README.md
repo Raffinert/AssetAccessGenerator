@@ -60,7 +60,7 @@ foreach (var content in matches)
 
 ```csharp
 [Theory]
-[Contents.FromPattern("**/**/cont*")]
+[Contents.FromPattern("**/cont*")]
 public void PrintContentPath(Content file)
 {
     testOutputHelper.WriteLine(file.GetContentFilePath());
