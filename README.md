@@ -143,5 +143,5 @@ Also, it saves quite a bit of typing effort.
 
 ## Filesystem Globbing Support
 
-For pattern matching in `GetMatches`, all three generators use embedded sources from 
+For pattern matching in `GetMatches` and `FromPattern` xUnit attribute, all three generators use embedded sources from 
 the [DotNet.Glob](https://github.com/dazinator/DotNet.Glob) library, which is licensed under MIT.
