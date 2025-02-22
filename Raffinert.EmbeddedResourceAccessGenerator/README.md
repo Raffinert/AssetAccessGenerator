@@ -67,7 +67,7 @@ foreach (var resource in matches)
 
 ```csharp
 [Theory]
-[EmbeddedResources.FromPattern("**/**/*")]
+[EmbeddedResources.FromPattern("**/*")]
 public void PrintEmbeddedResource(EmbeddedResource file)
 {
     testOutputHelper.WriteLine(file.ToString());
