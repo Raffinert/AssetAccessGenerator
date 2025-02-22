@@ -10,6 +10,7 @@ Improvements in the EmbeddedResourceAccessGenerator:
 * Added synchronous and asynchronous extension methods ReadAllText, ReadAllTextAsync, ReadAllBytes, ReadAllBytesAsync.
 * Added `GetMatches` method for filesystem globbing support (be careful - it supports only string literals).
 * Added `[FromPattern]` xUnit attribute for use with the `[Theory]` attribute.
+* Added GetFileInfo method to Content and None generators.
 
 # EmbeddedResourceAccessGenerator
 [![NuGet version (Raffinert.EmbeddedResourceAccessGenerator)](https://img.shields.io/nuget/v/Raffinert.EmbeddedResourceAccessGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Raffinert.EmbeddedResourceAccessGenerator/)
