@@ -7,22 +7,23 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Yevhen Cherkes, Christoph Hornung</Authors>
 		<PackageId>Raffinert.EmbeddedResourceAccessGenerator</PackageId>
-		<Version>1.0.9</Version>
+		<Version>1.0.10</Version>
 		<Copyright>Yevhen Cherkes, Christoph Hornung</Copyright>
 		<Description>Generates strongly typed access methods for embedded resources.</Description>
 		<PackageProjectUrl>https://github.com/Raffinert/AssetAccessGenerator</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Raffinert/AssetAccessGenerator</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>
-			v 1.0.9 - Add missing usings to the generated code.
-			v 1.0.8 - Add EmbeddedResources.FromPattern xUnit attribute for use with the Theory attribute.
-			v 1.0.7 - Remove dependency on DotNet.Glob.
-			v 1.0.6 - Add EmbeddedResources.GetMatches method.
-			v 1.0.5 - Downgrade version of Microsoft.CodeAnalysis.CSharp to be compatible with entityframework design tools.
-			v 1.0.4 - Fix missing using System.Threading directive.
-			v 1.0.3 - Fix missing using System.Threading.Tasks directive.
-			v 1.0.2 - Separate readmes between the projects and update them.
-			v 1.0.1 - Added ReadAllBytes and ReadAllBytesAsync methods
+			v 1.0.10 - Add missing xml comment to FromPatternAttribute.GetData method (issue #15).
+			v 1.0.9  - Add missing usings to the generated code.
+			v 1.0.8  - Add EmbeddedResources.FromPattern xUnit attribute for use with the Theory attribute.
+			v 1.0.7  - Remove dependency on DotNet.Glob.
+			v 1.0.6  - Add EmbeddedResources.GetMatches method.
+			v 1.0.5  - Downgrade version of Microsoft.CodeAnalysis.CSharp to be compatible with entityframework design tools.
+			v 1.0.4  - Fix missing using System.Threading directive.
+			v 1.0.3  - Fix missing using System.Threading.Tasks directive.
+			v 1.0.2  - Separate readmes between the projects and update them.
+			v 1.0.1  - Added ReadAllBytes and ReadAllBytesAsync methods
 			v 1.0.0
 			- Removed EmbeddedResources.{{identifierName}}_Stream and EmbeddedResources.StreamReader {{identifierName}}_Reader properties
 			- Added ReadAllText and ReadAllTextAsync methods

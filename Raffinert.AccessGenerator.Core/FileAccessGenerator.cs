@@ -128,10 +128,11 @@ internal static class FileAccessGenerator
 			                             /// <param name="pattern">The search pattern literal to match {{kindLowerCase}} files.</param>
 			                             public class FromPatternAttribute(string pattern) : DataAttribute
 			                             {
+			                                 ///<inheritdoc/>
 			                                 public override IEnumerable<object[]> GetData(MethodInfo testMethod)
 			                                 {
 			                                     var matches = GetMatches(pattern);
-			                                     return matches.Select(none => new object[] { none });
+			                                     return matches.Select(match => new object[] { match });
 			                                 }
 			                             }
 			                         
