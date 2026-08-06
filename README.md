@@ -2,6 +2,54 @@
 
 A refined version of the original [EmbeddedResourceAccessGenerator](https://github.com/ChristophHornung/EmbeddedResourceGenerator) by [ChristophHornung](https://github.com/ChristophHornung)
 
+## Quick start
+
+Choose the generator that matches how your project includes the file:
+
+| Package | MSBuild item | Generated API | Requirement |
+| --- | --- | --- | --- |
+| `Raffinert.EmbeddedResourceAccessGenerator` | `EmbeddedResource` | `EmbeddedResources` / `EmbeddedResource` | The file is compiled into the assembly. |
+| `Raffinert.ContentItemAccessGenerator` | `Content` | `Contents` / `Content` | `CopyToOutputDirectory` is `Always` or `PreserveNewest`. |
+| `Raffinert.NoneItemAccessGenerator` | `None` | `Nones` / `None` | `CopyToOutputDirectory` is `Always` or `PreserveNewest`. |
+
+Install the package that corresponds to the item type:
+
+```bash
+dotnet add package Raffinert.EmbeddedResourceAccessGenerator
+```
+
+For example, declare an embedded resource:
+
+```xml
+<ItemGroup>
+  <EmbeddedResource Include="Assets\Messages\welcome.txt" />
+</ItemGroup>
+```
+
+After building, access it through the generated enum:
+
+```csharp
+string text = EmbeddedResource.Assets_Messages_welcome_txt.ReadAllText();
+```
+
+For files deployed beside the application, use `Content` (or `None`) and set an output-copy policy:
+
+```xml
+<ItemGroup>
+  <Content Include="Assets\settings.json"
+           CopyToOutputDirectory="PreserveNewest" />
+</ItemGroup>
+```
+
+```csharp
+string path = Content.Assets_settings_json.GetContentFilePath();
+string json = Content.Assets_settings_json.ReadAllText();
+```
+
+> **Compatibility:** Remove the original `EmbeddedResourceAccessGenerator` before installing any generator from this repository.
+
+## Project improvements
+
 Improvements in the EmbeddedResourceAccessGenerator:
 
 * Fixed a bug when the generator generates code for all AdditionalFiles, not EmbeddedResources only. This means that the original EmbeddedResourceAccessGenerator is incompatible with all three generators and must be removed before adding those generators.
